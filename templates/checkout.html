@@ -274,3 +274,148 @@
                     <p class="text-[11px] mb-5" style="color: var(--cf-muted);">Taxes calculated at checkout</p>
 
                     {% for item in cart_items %}
+                    <div class="summary-item-cf flex items-center gap-3 py-3">
+                        <div class="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0" style="background: var(--cf-mist);">
+                            <img src="{{ item.image }}" alt="{{ item.name }}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm font-semibold truncate" style="color: var(--cf-deep);">{{ item.name }}</p>
+                            <p class="text-xs mt-0.5" style="color: var(--cf-muted);">Qty {{ item.quantity }}</p>
+                        </div>
+                        <p class="text-sm font-bold flex-shrink-0" style="color: var(--cf-sage);">${{ "%.2f"|format(item.price) }}</p>
+                    </div>
+                    {% endfor %}
+
+                    <div class="mt-4 pt-4 space-y-2.5 text-sm" style="border-top: 1px solid var(--cf-border);">
+                        <div class="flex justify-between">
+                            <span style="color: var(--cf-soft);">Subtotal</span>
+                            <span class="font-semibold" style="color: var(--cf-deep);">${{ "%.2f"|format(subtotal) }}</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span style="color: var(--cf-soft);">Shipping</span>
+                            <span class="font-semibold" style="color: var(--cf-deep);">
+                                {% if shipping == 0 %}
+                                <span class="text-[#5c7a62] text-xs font-semibold px-2 py-0.5 rounded-full" style="background:#eef4ef;">FREE</span>
+                                {% else %}
+                                ${{ "%.2f"|format(shipping) }}
+                                {% endif %}
+                            </span>
+                        </div>
+                        <div class="pt-4 flex justify-between items-baseline" style="border-top: 1px solid var(--cf-border);">
+                            <span class="font-semibold" style="color: var(--cf-deep);">Total</span>
+                            <span class="text-2xl font-bold" style="color: var(--cf-sage);">${{ "%.2f"|format(total) }}</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-5 space-y-2 text-xs" style="color: var(--cf-muted);">
+                        <p><i class="fas fa-lock mr-2" style="color: #c8bdb4;"></i> Secure checkout</p>
+                        <p><i class="fas fa-undo mr-2" style="color: #c8bdb4;"></i> Free returns within 30 days</p>
+                        <p><i class="fas fa-leaf mr-2" style="color: #c8bdb4;"></i> Cruelty-free &amp; clean ingredients</p>
+                    </div>
+
+                    <div class="mt-5 flex items-center justify-center gap-3 text-xl" style="color: #c8bdb4;">
+                        <i class="fab fa-cc-visa"></i>
+                        <i class="fab fa-cc-mastercard"></i>
+                        <i class="fab fa-cc-amex"></i>
+                        <i class="fab fa-cc-paypal"></i>
+                        <i class="fab fa-cc-apple-pay"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTACT STRIP -->
+        <div class="mt-12 pt-6 text-center" style="border-top: 1px solid var(--cf-border);">
+            <p class="text-xs" style="color: var(--cf-muted);">
+                Need help? <a href="mailto:christiefrostbeautyandskincare@gmail.com" class="font-medium hover:underline" style="color: var(--cf-sage);">christiefrostbeautyandskincare@gmail.com</a>
+                · <a href="tel:+12052588482" class="font-medium hover:underline" style="color: var(--cf-sage);">+1 (205) 258-8482</a>
+            </p>
+            <p class="text-[11px] mt-1" style="color: #c8bdb4;">8656 County Road 49, Verbena, AL 36091</p>
+        </div>
+    </div>
+
+    <!-- Confetti Container -->
+    <div class="confetti-container" id="confettiContainer"></div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast-cf hidden max-w-sm">
+        <div class="flex items-center gap-3">
+            <span class="text-2xl">✅</span>
+            <p id="toastMessage" class="font-semibold text-sm" style="color: var(--cf-deep);"></p>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+
+        function goToStep(step) {
+            document.querySelectorAll('.checkout-step-cf').forEach(el => el.classList.remove('active'));
+            document.getElementById('step' + step).classList.add('active');
+
+            for (let i = 1; i <= 3; i++) {
+                const dot = document.getElementById('step' + i + 'Dot');
+                dot.classList.remove('active', 'completed');
+                if (i < step) dot.classList.add('completed');
+                if (i === step) dot.classList.add('active');
+            }
+            currentStep = step;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function placeOrder() {
+            const btn = document.querySelector('#step2 .btn-cf');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2 text-xs"></i> Processing...';
+
+            fetch('/place-order', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('orderId').textContent = data.order_id;
+                    goToStep(3);
+                    launchConfetti();
+                    showToast('Order placed successfully! 🎉');
+                } else {
+                    showToast('❌ ' + data.message);
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-lock mr-2 text-xs"></i> Place Order';
+                }
+            })
+            .catch(() => {
+                showToast('❌ Something went wrong');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-lock mr-2 text-xs"></i> Place Order';
+            });
+        }
+
+        function launchConfetti() {
+            const container = document.getElementById('confettiContainer');
+            const colors = ['#7a9c8e', '#5f7f72', '#b8a9c9', '#c4a882', '#e8e2f0', '#d4b8b0'];
+
+            for (let i = 0; i < 100; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                piece.style.left = Math.random() * 100 + '%';
+                piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+                piece.style.width = (Math.random() * 8 + 4) + 'px';
+                piece.style.height = (Math.random() * 8 + 4) + 'px';
+                piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                piece.style.animationDelay = (Math.random() * 2) + 's';
+                container.appendChild(piece);
+                setTimeout(() => piece.remove(), 4500);
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = message;
+            toast.classList.remove('hidden');
+            clearTimeout(window.toastTimeout);
+            window.toastTimeout = setTimeout(() => toast.classList.add('hidden'), 4000);
+        }
+    </script>
+</body>
+</html>
