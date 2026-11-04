@@ -3,322 +3,705 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Checkout — Christie Frost Beauty</title>
+    <title>Christie Frost Beauty — Wholesale & Retail Skincare</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet" />
     <style>
         * { font-family: 'Inter', sans-serif; }
         .serif { font-family: 'Fraunces', serif; }
         :root {
             --cf-sage: #7a9c8e;
             --cf-sage-deep: #5f7f72;
+            --cf-lavender: #b8a9c9;
+            --cf-lavender-soft: #e8e2f0;
             --cf-ivory: #faf8f5;
             --cf-mist: #f0eef6;
             --cf-deep: #2d2926;
             --cf-soft: #5c5551;
             --cf-muted: #9e9590;
             --cf-border: #e8e2dc;
+            --cf-blush: #d4b8b0;
+            --cf-gold: #c4a882;
         }
         body { background-color: var(--cf-ivory); }
-        .gradient-bg-cf {
-            background: linear-gradient(145deg, #f5f2f8 0%, #eef2ef 40%, #f4eff2 70%, #faf8f5 100%);
+
+        .gradient-hero-cf {
+            background: linear-gradient(145deg, #f5f2f8 0%, #eef2ef 30%, #f4eff2 60%, #faf8f5 100%);
+            position: relative; overflow: hidden;
         }
-        .glass-card-cf {
-            background: rgba(255, 255, 255, 0.88);
+        .hero-blob-cf {
+            position: absolute; border-radius: 50%; filter: blur(90px);
+            opacity: 0.25; pointer-events: none;
+        }
+        .hero-title-cf {
+            font-family: 'Fraunces', serif;
+            font-size: 4.4rem; line-height: 1.05; color: #2d2926;
+            font-weight: 600;
+        }
+        @media (max-width: 768px) { .hero-title-cf { font-size: 2.7rem; } }
+
+        .glass-nav-cf {
+            background: rgba(250, 248, 245, 0.90);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(232, 226, 220, 0.8);
-            border-radius: 28px;
-            box-shadow: 0 12px 40px rgba(80, 70, 60, 0.06);
+            border-bottom: 1px solid rgba(200, 190, 180, 0.25);
+            transition: all 0.3s ease;
         }
+        .glass-nav-cf.scrolled {
+            background: rgba(250, 248, 245, 0.98);
+            box-shadow: 0 8px 30px rgba(80, 70, 60, 0.06);
+        }
+        .nav-link-cf {
+            position: relative; font-weight: 500; color: #5c5551; transition: color 0.3s;
+        }
+        .nav-link-cf::after {
+            content: ''; position: absolute; bottom: -6px; left: 50%;
+            width: 0; height: 2px; background: #7a9c8e;
+            transition: all 0.3s ease; transform: translateX(-50%); border-radius: 2px;
+        }
+        .nav-link-cf:hover { color: #7a9c8e; }
+        .nav-link-cf:hover::after { width: 80%; }
+
         .btn-cf {
             background: linear-gradient(135deg, #7a9c8e 0%, #5f7f72 100%);
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border: none; cursor: pointer; color: white; font-weight: 600;
+            position: relative; overflow: hidden;
         }
         .btn-cf:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 16px 36px rgba(122, 156, 142, 0.30);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(122, 156, 142, 0.3);
         }
-        .btn-cf:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+        .btn-cf::after {
+            content: ''; position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.15) 50%, transparent 60%);
+            transform: rotate(45deg) translateX(-100%); transition: all 0.6s ease;
+        }
+        .btn-cf:hover::after { transform: rotate(45deg) translateX(100%); }
         .btn-outline-cf {
-            border: 2px solid #c8bdb4; color: var(--cf-soft);
-            transition: all 0.3s ease; background: transparent;
+            background: transparent; border: 2px solid #c8bdb4;
+            color: #5c5551; font-weight: 600; transition: all 0.3s ease;
         }
         .btn-outline-cf:hover {
-            border-color: var(--cf-sage); color: var(--cf-sage);
-            background: rgba(122, 156, 142, 0.04);
+            border-color: #7a9c8e; color: #7a9c8e; background: rgba(122, 156, 142, 0.04);
         }
-        .form-input-cf {
-            background: #faf8f5; border: 1px solid var(--cf-border);
-            border-radius: 14px; padding: 13px 16px; width: 100%;
-            color: var(--cf-deep); transition: all 0.3s; font-size: 0.9rem;
+
+        .product-card-cf {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer; border: 1px solid #e8e2dc; background: #ffffff;
+            position: relative; overflow: visible; border-radius: 28px;
         }
-        .form-input-cf:focus {
-            outline: none; border-color: var(--cf-sage);
-            box-shadow: 0 0 0 3px rgba(122, 156, 142, 0.1); background: #fff;
+        .product-card-cf:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(80, 70, 60, 0.08);
+            border-color: #c8bdb4;
         }
-        .step-indicator-cf {
-            display: flex; justify-content: center; align-items: center;
-            gap: 8px; margin-bottom: 32px;
+        .product-image-container-cf {
+            overflow: hidden; border-radius: 20px; background: #f0eef6;
+            width: 100%; height: 220px;
         }
-        .step-dot-cf {
-            width: 44px; height: 5px; border-radius: 3px;
-            background: #e0d8d0; transition: all 0.4s ease;
+        .product-image-container-cf.tall { height: 260px; }
+        .product-image-cf {
+            width: 100%; height: 100%; object-fit: cover; display: block;
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .step-dot-cf.active { background: var(--cf-sage); width: 64px; }
-        .step-dot-cf.completed { background: #8aaa96; }
-        .checkout-step-cf { display: none; animation: fadeInCF 0.5s ease; }
-        .checkout-step-cf.active { display: block; }
-        @keyframes fadeInCF {
-            0% { opacity: 0; transform: translateY(20px); }
+        .product-card-cf:hover .product-image-cf { transform: scale(1.06); }
+
+        .product-badge-cf {
+            position: absolute; top: 12px; left: 12px; z-index: 10;
+            font-size: 0.7rem; font-weight: 700; padding: 5px 14px;
+            border-radius: 999px; color: white; white-space: nowrap;
+            pointer-events: none; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .badge-best-cf { background: linear-gradient(135deg, #7a9c8e, #5f7f72); }
+        .badge-new-cf { background: linear-gradient(135deg, #b8a9c9, #9a8aab); }
+        .badge-trending-cf { background: linear-gradient(135deg, #c4a882, #b09872); }
+
+        .section-title-cf { font-family: 'Fraunces', serif; font-weight: 600; color: #2d2926; }
+
+        .animate-float-cf { animation: floatCF 6s ease-in-out infinite; }
+        @keyframes floatCF {
+            0%,100% { transform: translateY(0px); }
+            50% { transform: translateY(-16px); }
+        }
+        .fade-slide-cf {
+            opacity: 0; transform: translateY(30px);
+            animation: fadeSlideCF 0.8s ease-out forwards;
+        }
+        @keyframes fadeSlideCF {
+            0% { opacity: 0; transform: translateY(30px); }
             100% { opacity: 1; transform: translateY(0); }
         }
-        .confetti-container {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 9998; overflow: hidden;
-        }
-        .confetti-piece {
-            position: absolute; width: 10px; height: 10px; border-radius: 2px;
-            animation: confettiFall linear forwards;
-        }
-        @keyframes confettiFall {
-            0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-        }
+
         .toast-cf {
             position: fixed; bottom: 30px; right: 30px; z-index: 9999;
-            background: #fff; box-shadow: 0 20px 60px rgba(80, 70, 60, 0.12);
+            background: #ffffff; box-shadow: 0 20px 60px rgba(80, 70, 60, 0.12);
             border-radius: 24px; padding: 18px 26px;
-            animation: slideInCF 0.5s ease; border: 1px solid var(--cf-border);
+            animation: slideInCF 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid #e8e2dc;
         }
         @keyframes slideInCF {
             0% { transform: translateX(100px); opacity: 0; }
             100% { transform: translateX(0); opacity: 1; }
         }
         .hidden { display: none; }
-        .logo-mark { background: linear-gradient(135deg, #7a9c8e, #5f7f72); }
+
+        .marquee-text-cf { animation: marqueeCF 28s linear infinite; white-space: nowrap; }
+        @keyframes marqueeCF {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .category-pill-cf {
+            background: #f0eef6; border: 1px solid #e8e2dc;
+            transition: all 0.3s ease; cursor: pointer;
+            font-weight: 500; color: #5c5551;
+        }
+        .category-pill-cf:hover {
+            background: #e8e2f0; color: #2d2926; border-color: #c8bdb4;
+            transform: translateY(-2px); box-shadow: 0 6px 16px rgba(80, 70, 60, 0.08);
+        }
+        .category-pill-cf.active {
+            background: #c8bdb4; color: #2d2926; border-color: #b8a9a0; font-weight: 600;
+        }
+
+        .bundle-card-cf {
+            border: 1px solid #e8e2dc;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer; background: #faf8f5; border-radius: 28px;
+        }
+        .bundle-card-cf:hover {
+            border-color: #c8bdb4; transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(80, 70, 60, 0.06);
+        }
+        .bundle-card-cf.popular-cf {
+            border-color: #c4a882;
+            background: linear-gradient(135deg, #faf7f2, #f7f2ea);
+        }
+
+        .cart-count-cf {
+            background: #7a9c8e; color: white; border-radius: 50%;
+            padding: 2px 8px; font-size: 10px; font-weight: 700;
+            min-width: 20px; text-align: center;
+            box-shadow: 0 2px 8px rgba(122, 156, 142, 0.3);
+        }
+
+        .logo-cf { background: linear-gradient(135deg, #7a9c8e, #5f7f72); }
+
+        .testimonial-card-cf {
+            transition: all 0.3s ease; border: 1px solid #e8e2dc;
+            background: #faf8f5; border-radius: 28px;
+        }
+        .testimonial-card-cf:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(80, 70, 60, 0.06);
+            border-color: #c8bdb4;
+        }
+
+        .wholesale-card-cf {
+            background: linear-gradient(135deg, #eef2ef 0%, #e8e2f0 100%);
+            border: 1px solid #c8bdb4;
+            border-radius: 32px;
+            position: relative; overflow: hidden;
+        }
+        .wholesale-card-cf::before {
+            content: ''; position: absolute; top: -60px; right: -60px;
+            width: 220px; height: 220px; border-radius: 50%;
+            background: rgba(122, 156, 142, 0.08);
+        }
+
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f0eef6; }
         ::-webkit-scrollbar-thumb { background: #c8bdb4; border-radius: 4px; }
     </style>
 </head>
-<body class="gradient-bg-cf min-h-screen py-6 md:py-10 px-4">
+<body>
 
-    <div class="max-w-6xl mx-auto">
-
-        <!-- HEADER -->
-        <div class="flex items-center justify-between mb-8 gap-4">
-            <a href="/cart" class="flex items-center gap-2 text-sm font-medium" style="color: var(--cf-soft);">
-                <i class="fas fa-arrow-left text-xs"></i>
-                <span class="hidden sm:inline">Back to Bag</span>
-                <span class="sm:hidden">Back</span>
-            </a>
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl logo-mark flex items-center justify-center text-white font-bold text-base shadow-md flex-shrink-0">CF</div>
-                <h1 class="serif text-xl md:text-2xl font-semibold" style="color: var(--cf-deep);">Checkout</h1>
-            </div>
-            <span class="text-sm font-semibold" style="color: var(--cf-sage);">${{ "%.2f"|format(total) }}</span>
-        </div>
-
-        <!-- STEP INDICATORS -->
-        <div class="step-indicator-cf">
-            <div class="step-dot-cf active" id="step1Dot"></div>
-            <div class="step-dot-cf" id="step2Dot"></div>
-            <div class="step-dot-cf" id="step3Dot"></div>
-        </div>
-
-        <div class="grid lg:grid-cols-3 gap-8">
-
-            <!-- CHECKOUT FORM -->
-            <div class="lg:col-span-2">
-                <div class="glass-card-cf p-6 md:p-8 shadow-xl">
-
-                    <!-- STEP 1: SHIPPING -->
-                    <div class="checkout-step-cf active" id="step1">
-                        <div class="flex items-center gap-3 mb-5">
-                            <div class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white flex-shrink-0" style="background: var(--cf-sage);">1</div>
-                            <h2 class="serif text-xl md:text-2xl" style="color: var(--cf-deep);">Shipping Information</h2>
-                        </div>
-                        <div class="space-y-4">
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="text-xs font-medium block mb-1.5" style="color: var(--cf-soft);">First Name</label>
-                                    <input type="text" class="form-input-cf" placeholder="Jane" id="firstName" value="Jane">
-                                </div>
-                                <div>
-                                    <label class="text-xs font-medium block mb-1.5" style="color: var(--cf-soft);">Last Name</label>
-                                    <input type="text" class="form-input-cf" placeholder="Doe" id="lastName" value="Doe">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="text-xs font-medium block mb-1.5" style="color: var(--cf-soft);">Email Address</label>
-                                <input type="email" class="form-input-cf" placeholder="jane@example.com" id="email" value="jane@example.com">
-                            </div>
-                            <div>
-                                <label class="text-xs font-medium block mb-1.5" style="color: var(--cf-soft);">Phone Number</label>
-                                <input type="tel" class="form-input-cf" placeholder="+1 (555) 000-0000" id="phone" value="+1 (555) 000-0000">
-                            </div>
-                            <div>
-                                <label class="text-xs font-medium block mb-1.5" style="color: var(--cf-soft);">Shipping Address</label>
-                                <input type="text" class="form-input-cf" placeholder="123 Main Street" id="address" value="123 Main Street">
-                            </div>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="text-xs font-medium block mb-1.5" style="color: var(--cf-soft);">City</label>
-                                    <input type="text" class="form-input-cf" placeholder="Verbena" id="city" value="Verbena">
-                                </div>
-                                <div>
-                                    <label class="text-xs font-medium block mb-1.5" style="color: var(--cf-soft);">Postal Code</label>
-                                    <input type="text" class="form-input-cf" placeholder="36091" id="zip" value="36091">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="text-xs font-medium block mb-1.5" style="color: var(--cf-soft);">Country</label>
-                                <input type="text" class="form-input-cf" placeholder="United States" id="country" value="United States">
-                            </div>
-                        </div>
-                        <button onclick="goToStep(2)" class="mt-7 w-full py-4 rounded-2xl btn-cf text-sm md:text-base">
-                            Continue to Payment <i class="fas fa-arrow-right ml-2 text-xs"></i>
-                        </button>
-                    </div>
-
-                    <!-- STEP 2: PAYMENT -->
-                    <div class="checkout-step-cf" id="step2">
-                        <div class="flex items-center gap-3 mb-5">
-                            <div class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white flex-shrink-0" style="background: var(--cf-sage);">2</div>
-                            <h2 class="serif text-xl md:text-2xl" style="color: var(--cf-deep);">Payment Details</h2>
-                        </div>
-                        <div class="flex items-center gap-2 rounded-xl px-4 py-3 mb-5 text-xs" style="background: #eef4ef; color: #5c7a62;">
-                            <i class="fas fa-lock"></i>
-                            <span>Secure checkout. No real payment will be processed.</span>
-                        </div>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="text-xs font-medium block mb-1.5" style="color: var(--cf-soft);">Card Number</label>
-                                <input type="text" class="form-input-cf" placeholder="4242 4242 4242 4242" value="4242 4242 4242 4242" readonly>
-                            </div>
-                            <div class="grid grid-cols-3 gap-4">
-                                <div class="col-span-2">
-                                    <label class="text-xs font-medium block mb-1.5" style="color: var(--cf-soft);">Expiry Date</label>
-                                    <input type="text" class="form-input-cf" placeholder="MM/YY" value="12/25" readonly>
-                                </div>
-                                <div>
-                                    <label class="text-xs font-medium block mb-1.5" style="color: var(--cf-soft);">CVC</label>
-                                    <input type="text" class="form-input-cf" placeholder="123" value="123" readonly>
-                                </div>
-                            </div>
-                            <div>
-                                <label class="text-xs font-medium block mb-1.5" style="color: var(--cf-soft);">Name on Card</label>
-                                <input type="text" class="form-input-cf" placeholder="Jane Doe" value="Jane Doe">
-                            </div>
-                        </div>
-                        <div class="flex gap-3 mt-7">
-                            <button onclick="goToStep(1)" class="flex-1 py-4 rounded-2xl btn-outline-cf font-semibold text-sm">
-                                <i class="fas fa-arrow-left mr-2 text-xs"></i> Back
-                            </button>
-                            <button onclick="placeOrder()" class="flex-1 py-4 rounded-2xl btn-cf text-sm" id="placeOrderBtn">
-                                <i class="fas fa-lock mr-2 text-xs"></i> Place Order
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- STEP 3: CONFIRMATION -->
-                    <div class="checkout-step-cf text-center" id="step3">
-                        <div class="py-10 md:py-14">
-                            <div class="w-24 h-24 mx-auto rounded-full flex items-center justify-center mb-5" style="background: #eef4ef;">
-                                <i class="fas fa-check text-5xl" style="color: #8aaa96;"></i>
-                            </div>
-                            <h2 class="serif text-3xl md:text-4xl" style="color: var(--cf-deep);">Order Placed! 🎉</h2>
-                            <p class="mt-3 text-sm" style="color: var(--cf-muted);">Your skincare products are on the way</p>
-                            <div class="mt-7 p-5 rounded-2xl inline-block min-w-[240px]" style="background: var(--cf-mist); border: 1px solid var(--cf-border);">
-                                <p class="text-[11px] uppercase tracking-wider font-semibold" style="color: var(--cf-muted);">Order ID</p>
-                                <p class="font-bold text-xl mt-1" style="color: var(--cf-deep);" id="orderId">CF-XXXXXXXX</p>
-                            </div>
-                            <div class="mt-8 flex flex-col gap-3 max-w-xs mx-auto">
-                                <a href="/" class="py-4 rounded-2xl btn-cf text-sm text-center">
-                                    <i class="fas fa-arrow-left mr-2 text-xs"></i> Continue Shopping
-                                </a>
-                            </div>
-                            <p class="text-xs mt-6" style="color: var(--cf-muted);">
-                                A confirmation email has been sent.<br>Questions? <a href="mailto:christiefrostbeautyandskincare@gmail.com" class="font-medium hover:underline" style="color: var(--cf-sage);">Contact us</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ORDER SUMMARY -->
-            <div class="lg:col-span-1">
-                <div class="glass-card-cf p-6 md:p-7 h-fit sticky top-24">
-                    <h3 class="serif text-xl mb-1" style="color: var(--cf-deep);">Order Summary</h3>
-                    <p class="text-[11px] mb-5" style="color: var(--cf-muted);">Taxes calculated at checkout</p>
-
-                    {% for item in cart_items %}
-                    <div class="flex items-center gap-3 py-3" style="border-bottom: 1px solid #f3ebe5;">
-                        <div class="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0" style="background: var(--cf-mist);">
-                            <img src="{{ item.image }}" alt="{{ item.name }}" class="w-full h-full object-cover">
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <p class="text-sm font-semibold truncate" style="color: var(--cf-deep);">{{ item.name }}</p>
-                            <p class="text-xs mt-0.5" style="color: var(--cf-muted);">Qty {{ item.quantity }}</p>
-                        </div>
-                        <p class="text-sm font-bold flex-shrink-0" style="color: var(--cf-sage);">${{ "%.2f"|format(item.price) }}</p>
-                    </div>
-                    {% endfor %}
-
-                    <div class="mt-4 pt-4 space-y-2.5 text-sm" style="border-top: 1px solid var(--cf-border);">
-                        <div class="flex justify-between">
-                            <span style="color: var(--cf-soft);">Subtotal</span>
-                            <span class="font-semibold" style="color: var(--cf-deep);">${{ "%.2f"|format(subtotal) }}</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span style="color: var(--cf-soft);">Shipping</span>
-                            <span class="font-semibold" style="color: var(--cf-deep);">
-                                {% if shipping == 0 %}
-                                <span class="text-[#5c7a62] text-xs font-semibold px-2 py-0.5 rounded-full" style="background:#eef4ef;">FREE</span>
-                                {% else %}
-                                ${{ "%.2f"|format(shipping) }}
-                                {% endif %}
-                            </span>
-                        </div>
-                        <div class="pt-4 flex justify-between items-baseline" style="border-top: 1px solid var(--cf-border);">
-                            <span class="font-semibold" style="color: var(--cf-deep);">Total</span>
-                            <span class="text-2xl font-bold" style="color: var(--cf-sage);">${{ "%.2f"|format(total) }}</span>
-                        </div>
-                    </div>
-
-                    <div class="mt-5 space-y-2 text-xs" style="color: var(--cf-muted);">
-                        <p><i class="fas fa-lock mr-2" style="color: #c8bdb4;"></i> Secure checkout</p>
-                        <p><i class="fas fa-undo mr-2" style="color: #c8bdb4;"></i> Free returns within 30 days</p>
-                        <p><i class="fas fa-leaf mr-2" style="color: #c8bdb4;"></i> Cruelty-free &amp; clean ingredients</p>
-                    </div>
-
-                    <div class="mt-5 flex items-center justify-center gap-3 text-xl" style="color: #c8bdb4;">
-                        <i class="fab fa-cc-visa"></i>
-                        <i class="fab fa-cc-mastercard"></i>
-                        <i class="fab fa-cc-amex"></i>
-                        <i class="fab fa-cc-paypal"></i>
-                        <i class="fab fa-cc-apple-pay"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- CONTACT STRIP -->
-        <div class="mt-12 pt-6 text-center" style="border-top: 1px solid var(--cf-border);">
-            <p class="text-xs" style="color: var(--cf-muted);">
-                Need help? <a href="mailto:christiefrostbeautyandskincare@gmail.com" class="font-medium hover:underline" style="color: var(--cf-sage);">christiefrostbeautyandskincare@gmail.com</a>
-                · <a href="tel:+12052588482" class="font-medium hover:underline" style="color: var(--cf-sage);">+1 (205) 258-8482</a>
-            </p>
-            <p class="text-[11px] mt-1" style="color: #c8bdb4;">8656 County Road 49, Verbena, AL 36091</p>
+    <!-- TOP BAR -->
+    <div class="bg-[#2d2926] text-[#f0eef6] text-xs py-2.5 text-center overflow-hidden relative z-50">
+        <div class="marquee-text-cf inline-block font-medium tracking-wide">
+            🌿 Complimentary shipping over $35 · 30-Day Glow Guarantee · Wholesale &amp; Retail · Subscribe &amp; save 15% · Christie Frost Beauty
         </div>
     </div>
 
-    <!-- Confetti Container -->
-    <div class="confetti-container" id="confettiContainer"></div>
+    <!-- NAVIGATION -->
+    <nav class="glass-nav-cf fixed top-0 left-0 right-0 z-50" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <a href="/" class="flex items-center gap-3 group">
+                    <div class="w-12 h-12 rounded-2xl logo-cf flex items-center justify-center text-white font-bold text-xl shadow-md group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">CF</div>
+                    <div>
+                        <div class="text-xl font-bold tracking-tight text-[#2d2926]">Christie Frost<span class="text-[#7a9c8e]"> Beauty</span></div>
+                        <div class="text-[10px] text-[#9e9590] tracking-[0.2em] uppercase font-medium">Wholesale &amp; Retail · Est. 2026</div>
+                    </div>
+                </a>
+                <div class="hidden lg:flex items-center gap-8">
+                    <a href="#shop" class="nav-link-cf">Shop</a>
+                    <a href="#bundles" class="nav-link-cf">Bundles</a>
+                    <a href="#wholesale" class="nav-link-cf">Wholesale</a>
+                    <a href="#about" class="nav-link-cf">About</a>
+                    <a href="#reviews" class="nav-link-cf">Reviews</a>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button class="hidden md:block text-[#9e9590] hover:text-[#7a9c8e] transition text-lg"><i class="fas fa-search"></i></button>
+                    <button class="hidden md:block text-[#9e9590] hover:text-[#7a9c8e] transition text-lg relative">
+                        <i class="far fa-heart"></i>
+                        <span class="absolute -top-1 -right-2 text-[8px] bg-[#7a9c8e] text-white rounded-full px-1.5 py-0.5 leading-none">2</span>
+                    </button>
+                    <a href="/cart" class="relative text-[#5c5551] hover:text-[#7a9c8e] transition text-xl">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="cart-count-cf absolute -top-2 -right-3 text-xs" id="cartCount">{{ total_items or 0 }}</span>
+                    </a>
+                    <button onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})" class="hidden md:block px-6 py-2.5 rounded-full btn-cf text-sm shadow-md hover:shadow-xl">Shop Now</button>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-    <!-- Toast -->
+    <!-- HERO SECTION -->
+    <section class="gradient-hero-cf min-h-[85vh] flex items-center pt-36 relative">
+        <div class="hero-blob-cf w-[600px] h-[600px] bg-[#b8a9c9] top-[-200px] right-[-100px]"></div>
+        <div class="hero-blob-cf w-[400px] h-[400px] bg-[#7a9c8e] bottom-[-100px] left-[-100px]"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="fade-slide-cf">
+                    <div class="inline-flex items-center gap-2 bg-white/70 backdrop-blur-sm px-5 py-2.5 rounded-full text-sm text-[#5f7f72] font-semibold mb-6 border border-[#e8e2dc] shadow-sm">
+                        <span class="w-2.5 h-2.5 bg-[#7a9c8e] rounded-full animate-pulse"></span> Wholesale &amp; Retail Skincare
+                    </div>
+                    <h1 class="hero-title-cf">Radiance, <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-[#7a9c8e] to-[#b8a9c9]">beautifully yours</span></h1>
+                    <p class="text-[#5c5551] text-lg mt-4 max-w-md leading-relaxed">Clean, effective skincare made with intention. Dermatologist-tested, cruelty-free, and designed for your real glow — available for both retail and wholesale.</p>
+                    <div class="flex flex-wrap gap-4 mt-8">
+                        <a href="#shop" class="px-8 py-4 rounded-full btn-cf text-white font-bold shadow-lg flex items-center gap-2"><i class="fas fa-shopping-bag"></i> Shop Retail</a>
+                        <a href="#wholesale" class="px-8 py-4 rounded-full btn-outline-cf font-bold flex items-center gap-2"><i class="fas fa-boxes-stacked"></i> Wholesale Enquiry</a>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-6 mt-8 text-[#9e9590] text-sm">
+                        <div class="flex items-center gap-2"><span class="text-2xl">🌿</span> 50K+ Happy Customers</div>
+                        <div class="flex items-center gap-2"><span class="text-2xl">🐰</span> Cruelty-Free</div>
+                        <div class="flex items-center gap-2"><span class="text-2xl">💧</span> Dermatologist Tested</div>
+                    </div>
+                </div>
+
+                <!-- HERO VISUAL -->
+                <div class="relative animate-float-cf hidden lg:block">
+                    <div class="relative rounded-[32px] overflow-hidden shadow-2xl border-4 border-white/60 bg-[#f0eef6]">
+                        <img
+                            src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800&h=900&fit=crop&auto=format&q=80"
+                            alt="Luxury skincare serum bottle with dropper"
+                            class="w-full h-[480px] object-cover block"
+                            loading="eager"
+                            onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&h=900&fit=crop&auto=format&q=80';"
+                        >
+                        <div class="absolute top-5 left-5 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full text-xs font-bold text-[#7a9c8e] shadow-md">
+                            ✨ New Collection 2026
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-5 left-5 text-white">
+                            <p class="text-xs uppercase tracking-widest opacity-80">Signature Line</p>
+                            <p class="text-lg font-bold">Glow Repair Serum</p>
+                        </div>
+                    </div>
+
+                    <div class="absolute -top-6 -right-6 bg-white/95 backdrop-blur-sm rounded-2xl p-3 shadow-xl border border-white/60 w-40 hover:scale-105 transition-transform duration-300">
+                        <div class="rounded-xl overflow-hidden mb-2 h-20 bg-[#f0eef6]">
+                            <img
+                                src="https://images.unsplash.com/photo-1556228720-195a672e8a03?w=300&h=300&fit=crop&auto=format&q=80"
+                                alt="Hydrating face cream jar"
+                                class="w-full h-full object-cover block"
+                                loading="lazy"
+                                onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#e8e2f0,#b8a9c9)';"
+                            >
+                        </div>
+                        <p class="font-bold text-[#2d2926] text-xs">Hydrating Cream</p>
+                        <p class="text-[#9e9590] text-[10px]">Deep Moisture</p>
+                        <div class="flex items-center justify-between mt-1">
+                            <span class="text-sm font-bold text-[#2d2926]">$28.99</span>
+                            <span class="text-[9px] bg-[#e8e2f0] text-[#5c5551] px-1.5 py-0.5 rounded-full font-semibold">New</span>
+                        </div>
+                    </div>
+
+                    <div class="absolute -bottom-6 -left-6 bg-white/95 backdrop-blur-sm rounded-2xl px-5 py-3 shadow-xl border border-white/60">
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-yellow-500 text-sm">★★★★★</span>
+                            <span class="text-[#2d2926] font-bold text-sm">4.9</span>
+                            <span class="text-[#9e9590] text-[10px]">(50K+)</span>
+                        </div>
+                        <p class="text-[#5c5551] text-xs font-medium mt-0.5">"The best clean skincare."</p>
+                    </div>
+
+                    <div class="absolute top-1/2 -right-12 w-24 h-24 rounded-full overflow-hidden border-4 border-white/80 shadow-xl hidden xl:block bg-[#e8e2f0]">
+                        <img
+                            src="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=200&h=200&fit=crop&auto=format&q=80"
+                            alt="Botanical skincare ingredients"
+                            class="w-full h-full object-cover block"
+                            loading="lazy"
+                            onerror="this.style.display='none';"
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CATEGORY PILLS -->
+    <section class="py-8 bg-white/70 backdrop-blur-sm border-b border-[#e8e2dc] sticky top-20 z-40">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-wrap justify-center gap-3">
+                <span class="category-pill-cf active px-6 py-2.5 rounded-full text-sm">All Products</span>
+                <span class="category-pill-cf px-6 py-2.5 rounded-full text-sm">Serums</span>
+                <span class="category-pill-cf px-6 py-2.5 rounded-full text-sm">Moisturizers</span>
+                <span class="category-pill-cf px-6 py-2.5 rounded-full text-sm">Sun Care</span>
+                <span class="category-pill-cf px-6 py-2.5 rounded-full text-sm">Masks</span>
+                <span class="category-pill-cf px-6 py-2.5 rounded-full text-sm">Cleansers</span>
+                <span class="category-pill-cf px-6 py-2.5 rounded-full text-sm">Toners</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- BEST SELLERS -->
+    <section id="shop" class="py-20 px-4 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-14">
+                <span class="text-[#7a9c8e] text-sm font-semibold tracking-[0.2em] uppercase">Christie's Picks</span>
+                <h2 class="section-title-cf text-5xl mt-2">Customer Favorites</h2>
+                <p class="text-[#9e9590] mt-3 max-w-md mx-auto">The products our retail and wholesale customers can't stop raving about</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {% for product in best_sellers %}
+                <div class="product-card-cf p-6 text-center">
+                    <div class="relative">
+                        <span class="product-badge-cf badge-best-cf">⭐ Best Seller</span>
+                        <div class="product-image-container-cf tall" style="background: #f0eef6;">
+                            <img src="{{ product.image }}" alt="{{ product.name }}" class="product-image-cf" loading="lazy" onerror="this.style.display='none'">
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-[#2d2926] text-lg mt-4">{{ product.name }}</h3>
+                    <p class="text-[#9e9590] text-sm mt-2">{{ product.description }}</p>
+                    <div class="flex items-center justify-center gap-1 mt-3 text-sm">
+                        <i class="fas fa-star text-yellow-500"></i><i class="fas fa-star text-yellow-500"></i><i class="fas fa-star text-yellow-500"></i><i class="fas fa-star text-yellow-500"></i><i class="fas fa-star text-yellow-500"></i>
+                        <span class="text-[#9e9590] text-xs ml-1">({{ product.reviews }})</span>
+                    </div>
+                    <div class="mt-4"><span class="text-2xl font-bold text-[#2d2926]">${{ product.price }}</span></div>
+                    <button onclick="addToCart('{{ product.id }}')" class="mt-4 w-full py-3.5 rounded-xl btn-cf text-white font-semibold"><i class="fas fa-plus mr-2"></i> Add to Bag</button>
+                </div>
+                {% endfor %}
+
+                {% for product in new_arrivals %}
+                <div class="product-card-cf p-6 text-center">
+                    <div class="relative">
+                        <span class="product-badge-cf badge-new-cf">🌟 New</span>
+                        <div class="product-image-container-cf tall" style="background: #f0eef6;">
+                            <img src="{{ product.image }}" alt="{{ product.name }}" class="product-image-cf" loading="lazy" onerror="this.style.display='none'">
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-[#2d2926] text-lg mt-4">{{ product.name }}</h3>
+                    <p class="text-[#9e9590] text-sm mt-2">{{ product.description }}</p>
+                    <div class="flex items-center justify-center gap-1 mt-3 text-sm">
+                        <i class="fas fa-star text-yellow-500"></i><i class="fas fa-star text-yellow-500"></i><i class="fas fa-star text-yellow-500"></i><i class="fas fa-star text-yellow-500"></i><i class="fas fa-star text-yellow-500"></i>
+                        <span class="text-[#9e9590] text-xs ml-1">({{ product.reviews }})</span>
+                    </div>
+                    <div class="mt-4"><span class="text-2xl font-bold text-[#2d2926]">${{ product.price }}</span></div>
+                    <button onclick="addToCart('{{ product.id }}')" class="mt-4 w-full py-3.5 rounded-xl btn-cf text-white font-semibold"><i class="fas fa-plus mr-2"></i> Add to Bag</button>
+                </div>
+                {% endfor %}
+
+                {% for product in trending %}
+                <div class="product-card-cf p-6 text-center">
+                    <div class="relative">
+                        <span class="product-badge-cf badge-trending-cf">🔥 Trending</span>
+                        <div class="product-image-container-cf tall" style="background: #f0eef6;">
+                            <img src="{{ product.image }}" alt="{{ product.name }}" class="product-image-cf" loading="lazy" onerror="this.style.display='none'">
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-[#2d2926] text-lg mt-4">{{ product.name }}</h3>
+                    <p class="text-[#9e9590] text-sm mt-2">{{ product.description }}</p>
+                    <div class="flex items-center justify-center gap-1 mt-3 text-sm">
+                        <i class="fas fa-star text-yellow-500"></i><i class="fas fa-star text-yellow-500"></i><i class="fas fa-star text-yellow-500"></i><i class="fas fa-star text-yellow-500"></i><i class="fas fa-star text-yellow-500"></i>
+                        <span class="text-[#9e9590] text-xs ml-1">({{ product.reviews }})</span>
+                    </div>
+                    <div class="mt-4"><span class="text-2xl font-bold text-[#2d2926]">${{ product.price }}</span></div>
+                    <button onclick="addToCart('{{ product.id }}')" class="mt-4 w-full py-3.5 rounded-xl btn-cf text-white font-semibold"><i class="fas fa-plus mr-2"></i> Add to Bag</button>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- ALL PRODUCTS -->
+    <section id="new" class="py-20 px-4 bg-[#faf8f5]">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-14">
+                <span class="text-[#7a9c8e] text-sm font-semibold tracking-[0.2em] uppercase">Shop All</span>
+                <h2 class="section-title-cf text-5xl mt-2">Complete Collection</h2>
+                <p class="text-[#9e9590] mt-3">Every product designed for your best skin — available retail &amp; wholesale</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {% for id, product in all_products.items() %}
+                <div class="bg-white rounded-3xl p-6 text-center shadow-sm hover:shadow-xl transition-all duration-300 border border-[#e8e2dc] hover:border-[#c8bdb4]">
+                    <div class="product-image-container-cf mb-4" style="background: #f0eef6;">
+                        <img src="{{ product.image }}" alt="{{ product.name }}" class="product-image-cf" loading="lazy" onerror="this.style.display='none'">
+                    </div>
+                    <h3 class="font-bold text-[#2d2926]">{{ product.name }}</h3>
+                    <p class="text-[#9e9590] text-xs mt-1">{{ product.category }}</p>
+                    <div class="flex items-center justify-center gap-0.5 mt-2 text-sm">
+                        {% for i in range(5) %}
+                            {% if i < product.rating|round(0, 'floor') %}
+                                <i class="fas fa-star text-yellow-500"></i>
+                            {% else %}
+                                <i class="far fa-star text-gray-300"></i>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="mt-3"><span class="text-xl font-bold text-[#2d2926]">${{ product.price }}</span></div>
+                    <button onclick="addToCart('{{ id }}')" class="mt-4 w-full py-2.5 rounded-xl bg-[#f0eef6] hover:bg-[#e8e2f0] text-[#5c5551] hover:text-[#2d2926] font-semibold transition text-sm"><i class="fas fa-plus mr-1"></i> Add to Bag</button>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- BUNDLES -->
+    <section id="bundles" class="py-20 px-4 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-14">
+                <span class="text-[#7a9c8e] text-sm font-semibold tracking-[0.2em] uppercase">Save More</span>
+                <h2 class="section-title-cf text-5xl mt-2">Perfect Bundles</h2>
+                <p class="text-[#9e9590] mt-3">Complete routines at an incredible value — retail &amp; wholesale</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {% for id, bundle in bundles.items() %}
+                <div class="bundle-card-cf {% if bundle.popular %}popular-cf{% endif %} p-6 text-center">
+                    {% if bundle.popular %}
+                    <span class="text-xs font-bold text-[#8a6b5a] bg-[#faf7f2] px-3 py-1.5 rounded-full inline-block mb-3 border border-[#c8bdb4]">⭐ Best Value</span>
+                    {% endif %}
+                    <div class="product-image-container-cf mb-4" style="background: #f0eef6;">
+                        <img src="{{ bundle.image }}" alt="{{ bundle.name }}" class="product-image-cf" loading="lazy" onerror="this.style.display='none'">
+                    </div>
+                    <h3 class="font-bold text-[#2d2926] text-lg">{{ bundle.name }}</h3>
+                    <p class="text-[#9e9590] text-sm mt-1">{{ bundle.products|length }} Products Included</p>
+                    <div class="mt-3">
+                        <span class="text-2xl font-bold text-[#2d2926]">${{ bundle.price }}</span>
+                        <span class="text-[#9e9590] text-sm line-through ml-2">${{ "%.2f"|format(bundle.price + bundle.savings) }}</span>
+                        <br>
+                        <span class="text-[#7a9c8e] text-sm font-semibold">Save ${{ bundle.savings }}</span>
+                    </div>
+                    <button onclick="addToCart('{{ id }}')" class="mt-4 w-full py-3.5 rounded-xl btn-cf text-white font-semibold"><i class="fas fa-plus mr-2"></i> Add Bundle</button>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- WHOLESALE SECTION -->
+    <section id="wholesale" class="py-20 px-4 bg-[#faf8f5]">
+        <div class="max-w-7xl mx-auto">
+            <div class="wholesale-card-cf p-8 md:p-12 relative z-10">
+                <div class="grid md:grid-cols-2 gap-10 items-center">
+                    <div>
+                        <span class="text-[#5f7f72] text-sm font-semibold tracking-[0.2em] uppercase">For Businesses</span>
+                        <h2 class="serif text-4xl md:text-5xl mt-2" style="color: var(--cf-deep);">Wholesale Programme</h2>
+                        <p class="mt-4 text-[#5c5551] leading-relaxed">Christie Frost Beauty and Skincare Products LLC supplies both retail customers and wholesale partners. We offer competitive trade pricing, bulk order support, and dedicated account management for salons, spas, retailers and resellers.</p>
+                        <ul class="mt-6 space-y-3 text-sm" style="color: var(--cf-soft);">
+                            <li class="flex items-center gap-3"><i class="fas fa-check-circle" style="color: #7a9c8e;"></i> Tiered wholesale pricing on all products</li>
+                            <li class="flex items-center gap-3"><i class="fas fa-check-circle" style="color: #7a9c8e;"></i> Minimum order quantities starting at 24 units</li>
+                            <li class="flex items-center gap-3"><i class="fas fa-check-circle" style="color: #7a9c8e;"></i> Private label &amp; custom bundle options</li>
+                            <li class="flex items-center gap-3"><i class="fas fa-check-circle" style="color: #7a9c8e;"></i> Dedicated wholesale account manager</li>
+                        </ul>
+                        <div class="flex flex-wrap gap-4 mt-8">
+                            <a href="mailto:christiefrostbeautyandskincare@gmail.com?subject=Wholesale%20Enquiry" class="px-8 py-4 rounded-full btn-cf text-white font-bold flex items-center gap-2"><i class="fas fa-envelope"></i> Wholesale Enquiry</a>
+                            <a href="tel:+12052588482" class="px-8 py-4 rounded-full btn-outline-cf font-bold flex items-center gap-2"><i class="fas fa-phone"></i> +1 (205) 258-8482</a>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-5 text-center border border-white/60">
+                            <div class="text-3xl mb-2">📦</div>
+                            <p class="font-bold text-[#2d2926] text-lg">Bulk Orders</p>
+                            <p class="text-[#9e9590] text-xs mt-1">Flexible MOQs</p>
+                        </div>
+                        <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-5 text-center border border-white/60">
+                            <div class="text-3xl mb-2">💼</div>
+                            <p class="font-bold text-[#2d2926] text-lg">Trade Pricing</p>
+                            <p class="text-[#9e9590] text-xs mt-1">Competitive margins</p>
+                        </div>
+                        <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-5 text-center border border-white/60">
+                            <div class="text-3xl mb-2">🏷️</div>
+                            <p class="font-bold text-[#2d2926] text-lg">Private Label</p>
+                            <p class="text-[#9e9590] text-xs mt-1">Your brand, our formula</p>
+                        </div>
+                        <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-5 text-center border border-white/60">
+                            <div class="text-3xl mb-2">🤝</div>
+                            <p class="font-bold text-[#2d2926] text-lg">Dedicated Support</p>
+                            <p class="text-[#9e9590] text-xs mt-1">Account manager</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="py-20 px-4 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-14">
+                <span class="text-[#7a9c8e] text-sm font-semibold tracking-[0.2em] uppercase">About Christie Frost Beauty</span>
+                <h2 class="section-title-cf text-5xl mt-2">Who We Are</h2>
+            </div>
+
+            <div class="max-w-3xl mx-auto text-center mb-14">
+                <p class="text-[#5c5551] text-lg leading-relaxed">
+                    <strong style="color: var(--cf-deep);">Christie Frost Beauty and Skincare Products LLC</strong> is an Alabama-based beauty company that specialises in the <strong>wholesale and retail sale</strong> of premium beauty and skincare products. We serve individual retail customers as well as salons, spas, retailers and resellers with clean, effective, dermatologist-tested formulas.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="text-center group">
+                    <div class="w-20 h-20 mx-auto rounded-2xl bg-[#f0eef6] group-hover:bg-[#e8e2f0] flex items-center justify-center text-4xl mb-4 transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg">🌿</div>
+                    <h3 class="font-bold text-[#2d2926] text-lg">Clean Ingredients</h3>
+                    <p class="text-[#9e9590] text-sm mt-2 leading-relaxed">Paraben-free, sulfate-free, and cruelty-free formulas</p>
+                </div>
+                <div class="text-center group">
+                    <div class="w-20 h-20 mx-auto rounded-2xl bg-[#f0eef6] group-hover:bg-[#e8e2f0] flex items-center justify-center text-4xl mb-4 transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg">🔬</div>
+                    <h3 class="font-bold text-[#2d2926] text-lg">Dermatologist Tested</h3>
+                    <p class="text-[#9e9590] text-sm mt-2 leading-relaxed">Clinically tested for safety and efficacy</p>
+                </div>
+                <div class="text-center group">
+                    <div class="w-20 h-20 mx-auto rounded-2xl bg-[#f0eef6] group-hover:bg-[#e8e2f0] flex items-center justify-center text-4xl mb-4 transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg">🏬</div>
+                    <h3 class="font-bold text-[#2d2926] text-lg">Wholesale &amp; Retail</h3>
+                    <p class="text-[#9e9590] text-sm mt-2 leading-relaxed">Serving both individual customers and businesses</p>
+                </div>
+                <div class="text-center group">
+                    <div class="w-20 h-20 mx-auto rounded-2xl bg-[#f0eef6] group-hover:bg-[#e8e2f0] flex items-center justify-center text-4xl mb-4 transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg">❤️</div>
+                    <h3 class="font-bold text-[#2d2926] text-lg">Loved by Thousands</h3>
+                    <p class="text-[#9e9590] text-sm mt-2 leading-relaxed">Over 50,000 happy customers worldwide</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section id="reviews" class="py-20 px-4 bg-[#faf8f5]">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-14">
+                <span class="text-[#7a9c8e] text-sm font-semibold tracking-[0.2em] uppercase">Testimonials</span>
+                <h2 class="section-title-cf text-5xl mt-2">What Our Customers Say</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="testimonial-card-cf p-8">
+                    <div class="flex text-yellow-500 text-sm mb-3">★★★★★</div>
+                    <p class="text-[#5c5551] italic leading-relaxed">"This serum completely transformed my skin! I've never felt more confident without makeup."</p>
+                    <div class="mt-4 flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-full bg-[#e8e2f0] flex items-center justify-center font-bold text-[#7a9c8e] text-lg flex-shrink-0">SM</div>
+                        <div><p class="font-semibold text-[#2d2926]">Sarah M.</p><p class="text-[#9e9590] text-xs">Verified Retail Buyer</p></div>
+                    </div>
+                </div>
+                <div class="testimonial-card-cf p-8">
+                    <div class="flex text-yellow-500 text-sm mb-3">★★★★★</div>
+                    <p class="text-[#5c5551] italic leading-relaxed">"The hydrating cream is so moisturizing! My skin feels amazing."</p>
+                    <div class="mt-4 flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-full bg-[#e8e2f0] flex items-center justify-center font-bold text-[#7a9c8e] text-lg flex-shrink-0">JK</div>
+                        <div><p class="font-semibold text-[#2d2926]">Jessica K.</p><p class="text-[#9e9590] text-xs">Verified Retail Buyer</p></div>
+                    </div>
+                </div>
+                <div class="testimonial-card-cf p-8">
+                    <div class="flex text-yellow-500 text-sm mb-3">★★★★★</div>
+                    <p class="text-[#5c5551] italic leading-relaxed">"We stock Christie Frost Beauty in our spa — our clients love the results and reorder every month."</p>
+                    <div class="mt-4 flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-full bg-[#e8e2f0] flex items-center justify-center font-bold text-[#7a9c8e] text-lg flex-shrink-0">AL</div>
+                        <div><p class="font-semibold text-[#2d2926]">Amanda L.</p><p class="text-[#9e9590] text-xs">Wholesale Partner · Spa Owner</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-20 px-4 bg-gradient-to-r from-[#7a9c8e] via-[#5f7f72] to-[#7a9c8e] relative overflow-hidden">
+        <div class="hero-blob-cf w-[500px] h-[500px] bg-white/10 top-[-200px] right-[-100px]"></div>
+        <div class="hero-blob-cf w-[300px] h-[300px] bg-white/10 bottom-[-100px] left-[-100px]"></div>
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <span class="text-white/80 text-sm font-semibold tracking-[0.2em] uppercase">Join the Glow Community</span>
+            <h2 class="section-title-cf text-5xl font-bold text-white mt-2">Ready to Glow?</h2>
+            <p class="text-white/80 text-lg mt-4 max-w-2xl mx-auto">Shop retail or become a wholesale partner — either way, your best skin starts here.</p>
+            <div class="mt-8 flex flex-wrap justify-center gap-4">
+                <button onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})" class="px-10 py-4 rounded-full bg-white text-[#5f7f72] font-bold text-lg shadow-xl hover:shadow-2xl transition-all transform hover:scale-105 inline-flex items-center gap-3"><i class="fas fa-shopping-bag"></i> Shop Retail</button>
+                <a href="#wholesale" class="px-10 py-4 rounded-full bg-transparent border-2 border-white/70 text-white font-bold text-lg hover:bg-white/10 transition-all inline-flex items-center gap-3"><i class="fas fa-boxes-stacked"></i> Wholesale</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#23201e] text-[#9e9590] pt-20 pb-6 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-12 lg:gap-16 pb-12 border-b border-[#3a3532]">
+                <div class="col-span-2 md:col-span-1">
+                    <div class="flex items-center gap-3 mb-5">
+                        <div class="w-12 h-12 rounded-2xl logo-cf flex items-center justify-center text-white font-bold text-xl shadow-lg flex-shrink-0">CF</div>
+                        <span class="text-xl font-bold text-white tracking-tight">Christie Frost<span class="text-[#7a9c8e]"> Beauty</span></span>
+                    </div>
+                    <p class="text-sm leading-relaxed text-[#9e9590] max-w-xs mb-6">Premium skincare for radiant, healthy skin. Wholesale and retail sales of beauty and skincare products. Clean, effective, and cruelty-free.</p>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-10 h-10 rounded-full bg-[#3a3532] hover:bg-[#7a9c8e]/20 hover:text-[#7a9c8e] flex items-center justify-center text-[#9e9590] transition-all duration-300 hover:scale-110"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-[#3a3532] hover:bg-[#7a9c8e]/20 hover:text-[#7a9c8e] flex items-center justify-center text-[#9e9590] transition-all duration-300 hover:scale-110"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-[#3a3532] hover:bg-[#7a9c8e]/20 hover:text-[#7a9c8e] flex items-center justify-center text-[#9e9590] transition-all duration-300 hover:scale-110"><i class="fab fa-tiktok"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-[#3a3532] hover:bg-[#7a9c8e]/20 hover:text-[#7a9c8e] flex items-center justify-center text-[#9e9590] transition-all duration-300 hover:scale-110"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-[#3a3532] hover:bg-[#7a9c8e]/20 hover:text-[#7a9c8e] flex items-center justify-center text-[#9e9590] transition-all duration-300 hover:scale-110"><i class="fab fa-pinterest-p"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-semibold text-sm uppercase tracking-wider mb-5">Shop</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#shop" class="text-sm text-[#9e9590] hover:text-white transition-colors">All Products</a></li>
+                        <li><a href="#bundles" class="text-sm text-[#9e9590] hover:text-white transition-colors">Bundles</a></li>
+                        <li><a href="#shop" class="text-sm text-[#9e9590] hover:text-white transition-colors">Best Sellers</a></li>
+                        <li><a href="#new" class="text-sm text-[#9e9590] hover:text-white transition-colors">New Arrivals</a></li>
+                        <li><a href="#wholesale" class="text-sm text-[#9e9590] hover:text-white transition-colors">Wholesale</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-semibold text-sm uppercase tracking-wider mb-5">Support</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-sm text-[#9e9590] hover:text-white transition-colors">Help Center</a></li>
+                        <li><a href="#" class="text-sm text-[#9e9590] hover:text-white transition-colors">Returns &amp; Refunds</a></li>
+                        <li><a href="#" class="text-sm text-[#9e9590] hover:text-white transition-colors">Shipping Info</a></li>
+                        <li><a href="#" class="text-sm text-[#9e9590] hover:text-white transition-colors">Track Order</a></li>
+                        <li><a href="mailto:christiefrostbeautyandskincare@gmail.com" class="text-sm text-[#9e9590] hover:text-white transition-colors">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-span-2 md:col-span-1">
+                    <h4 class="text-white font-semibold text-sm uppercase tracking-wider mb-5">Contact</h4>
+                    <div class="space-y-3 text-sm">
+                        <p class="flex items-start gap-3"><i class="fas fa-map-pin mt-1 text-[#7a9c8e]"></i> 8656 County Road 49, Verbena, AL 36091</p>
+                        <p class="flex items-center gap-3"><i class="fas fa-phone-alt text-[#7a9c8e]"></i> <a href="tel:+12052588482" class="hover:text-white transition">+1 (205) 258-8482</a></p>
+                        <p class="flex items-center gap-3"><i class="fas fa-envelope text-[#7a9c8e]"></i> <a href="mailto:christiefrostbeautyandskincare@gmail.com" class="hover:text-white transition break-all">christiefrostbeautyandskincare@gmail.com</a></p>
+                    </div>
+                    <h4 class="text-white font-semibold text-sm uppercase tracking-wider mb-4 mt-6">Stay Glowing ✨</h4>
+                    <form class="flex flex-col gap-3">
+                        <input type="email" placeholder="Enter your email" class="px-4 py-3 rounded-xl bg-[#3a3532] border border-[#4a4440] text-white placeholder-[#9e9590] focus:outline-none focus:ring-2 focus:ring-[#7a9c8e]/50 focus:border-transparent transition-all duration-300" />
+                        <button type="submit" class="px-4 py-3 rounded-xl bg-gradient-to-r from-[#7a9c8e] to-[#5f7f72] text-white font-semibold text-sm hover:shadow-lg hover:shadow-[#7a9c8e]/25 hover:scale-[1.02] transition-all duration-300">Subscribe</button>
+                    </form>
+                    <p class="text-xs text-[#9e9590] mt-3">No spam. Unsubscribe anytime.</p>
+                </div>
+            </div>
+
+            <div class="pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex flex-wrap items-center justify-center md:justify-start gap-4 md:gap-6 text-xs">
+                    <a href="#" class="text-[#9e9590] hover:text-white transition-colors duration-200">Privacy Policy</a>
+                    <span class="text-[#4a4440] hidden md:inline">|</span>
+                    <a href="#" class="text-[#9e9590] hover:text-white transition-colors duration-200">Terms of Service</a>
+                    <span class="text-[#4a4440] hidden md:inline">|</span>
+                    <a href="#" class="text-[#9e9590] hover:text-white transition-colors duration-200">Cookie Policy</a>
+                </div>
+                <p class="text-xs text-[#9e9590] text-center">
+                    © 2026 <span class="text-white/80 font-medium">Christie Frost Beauty and Skincare Products LLC</span>. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- TOAST -->
     <div id="toast" class="toast-cf hidden max-w-sm">
         <div class="flex items-center gap-3">
             <span class="text-2xl">✅</span>
@@ -327,63 +710,20 @@
     </div>
 
     <script>
-        function goToStep(step) {
-            document.querySelectorAll('.checkout-step-cf').forEach(el => el.classList.remove('active'));
-            document.getElementById('step' + step).classList.add('active');
-
-            for (let i = 1; i <= 3; i++) {
-                const dot = document.getElementById('step' + i + 'Dot');
-                dot.classList.remove('active', 'completed');
-                if (i < step) dot.classList.add('completed');
-                if (i === step) dot.classList.add('active');
-            }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function placeOrder() {
-            const btn = document.getElementById('placeOrderBtn');
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2 text-xs"></i> Processing...';
-
-            fetch('/place-order', {
+        function addToCart(itemId) {
+            fetch('/add-to-cart/' + itemId, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' }
             })
-            .then(response => response.json())
+            .then(r => r.json())
             .then(data => {
+                showToast(data.success ? 'Added to bag! 🌸' : data.message);
                 if (data.success) {
-                    document.getElementById('orderId').textContent = data.order_id;
-                    goToStep(3);
-                    launchConfetti();
-                    showToast('Order placed successfully! 🎉');
-                } else {
-                    showToast('❌ ' + data.message);
-                    btn.disabled = false;
-                    btn.innerHTML = '<i class="fas fa-lock mr-2 text-xs"></i> Place Order';
+                    const cartCount = document.getElementById('cartCount');
+                    if (cartCount) cartCount.textContent = data.count;
                 }
             })
-            .catch(() => {
-                showToast('❌ Something went wrong');
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-lock mr-2 text-xs"></i> Place Order';
-            });
-        }
-
-        function launchConfetti() {
-            const container = document.getElementById('confettiContainer');
-            const colors = ['#7a9c8e', '#5f7f72', '#b8a9c9', '#c4a882', '#e8e2f0', '#d4b8b0'];
-            for (let i = 0; i < 100; i++) {
-                const piece = document.createElement('div');
-                piece.className = 'confetti-piece';
-                piece.style.left = Math.random() * 100 + '%';
-                piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-                piece.style.width = (Math.random() * 8 + 4) + 'px';
-                piece.style.height = (Math.random() * 8 + 4) + 'px';
-                piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                piece.style.animationDelay = (Math.random() * 2) + 's';
-                container.appendChild(piece);
-                setTimeout(() => piece.remove(), 4500);
-            }
+            .catch(() => showToast('Something went wrong'));
         }
 
         function showToast(message) {
@@ -391,8 +731,27 @@
             document.getElementById('toastMessage').textContent = message;
             toast.classList.remove('hidden');
             clearTimeout(window.toastTimeout);
-            window.toastTimeout = setTimeout(() => toast.classList.add('hidden'), 4000);
+            window.toastTimeout = setTimeout(() => toast.classList.add('hidden'), 3000);
         }
+
+        window.addEventListener('scroll', () => {
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        document.querySelectorAll('.category-pill-cf').forEach(pill => {
+            pill.addEventListener('click', function() {
+                document.querySelectorAll('.category-pill-cf').forEach(p => p.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
     </script>
 </body>
 </html>
