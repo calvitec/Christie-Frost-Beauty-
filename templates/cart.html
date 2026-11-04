@@ -3,93 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Bag — Jennie Langaas Beauty</title>
+    <title>Your Bag — Christie Frost Beauty</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
     <style>
         * { font-family: 'Inter', sans-serif; }
-        .serif { font-family: 'Playfair Display', serif; }
+        .serif { font-family: 'Fraunces', serif; }
         :root {
-            --jenny-clay: #b06e5c;
-            --jenny-rose: #c98b7a;
-            --jenny-cream: #fbf8f4;
-            --jenny-sand: #f5efe8;
-            --jenny-deep: #3a2e2a;
-            --jenny-soft: #6b5b4f;
-            --jenny-muted: #a09084;
-            --jenny-border: #efe7e1;
+            --cf-sage: #7a9c8e;
+            --cf-sage-deep: #5f7f72;
+            --cf-lavender: #b8a9c9;
+            --cf-lavender-soft: #e8e2f0;
+            --cf-ivory: #faf8f5;
+            --cf-mist: #f0eef6;
+            --cf-deep: #2d2926;
+            --cf-soft: #5c5551;
+            --cf-muted: #9e9590;
+            --cf-border: #e8e2dc;
         }
-        body { background-color: var(--jenny-cream); }
-        .btn-jenny {
-            background: linear-gradient(135deg, #c98b7a 0%, #b06e5c 100%);
+        body { background-color: var(--cf-ivory); }
+        .btn-cf {
+            background: linear-gradient(135deg, #7a9c8e 0%, #5f7f72 100%);
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border: none; cursor: pointer; color: white; font-weight: 600;
         }
-        .btn-jenny:hover {
+        .btn-cf:hover {
             transform: translateY(-2px);
-            box-shadow: 0 16px 36px rgba(176, 110, 92, 0.30);
+            box-shadow: 0 16px 36px rgba(122, 156, 142, 0.30);
         }
         .cart-card {
             transition: all 0.3s ease;
-            border: 1px solid var(--jenny-border);
+            border: 1px solid var(--cf-border);
             background: #ffffff;
             border-radius: 24px;
         }
         .cart-card:hover {
-            box-shadow: 0 16px 40px rgba(120, 80, 60, 0.06);
-            border-color: #d9c5b8;
+            box-shadow: 0 16px 40px rgba(80, 70, 60, 0.06);
+            border-color: #c8bdb4;
         }
         .qty-btn {
             transition: all 0.25s ease;
-            background: var(--jenny-sand);
-            color: var(--jenny-soft);
+            background: var(--cf-mist);
+            color: var(--cf-soft);
         }
         .qty-btn:hover {
-            background: #e8ddd2;
-            color: var(--jenny-deep);
+            background: #e8e2f0;
+            color: var(--cf-deep);
             transform: scale(1.06);
         }
         .summary-card {
             background: #ffffff;
-            border: 1px solid var(--jenny-border);
+            border: 1px solid var(--cf-border);
             border-radius: 28px;
-            box-shadow: 0 8px 30px rgba(120, 80, 60, 0.04);
+            box-shadow: 0 8px 30px rgba(80, 70, 60, 0.04);
         }
         .free-ship {
-            background: #eef4e9;
-            color: #5c7a4a;
+            background: #eef4ef;
+            color: #5c7a62;
             border-radius: 999px;
             padding: 4px 12px;
             font-size: 0.75rem;
             font-weight: 600;
         }
         .logo-mark {
-            background: linear-gradient(135deg, #c98b7a, #b06e5c);
+            background: linear-gradient(135deg, #7a9c8e, #5f7f72);
         }
         .bundle-tag {
-            background: #f5efe8;
-            color: #8b6b5a;
-            border: 1px solid #e5d9cf;
+            background: #f0eef6;
+            color: #6b5b7a;
+            border: 1px solid #e0d8e8;
         }
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f5efe8; }
-        ::-webkit-scrollbar-thumb { background: #d9c5b8; border-radius: 4px; }
+        ::-webkit-scrollbar-track { background: #f0eef6; }
+        ::-webkit-scrollbar-thumb { background: #c8bdb4; border-radius: 4px; }
     </style>
 </head>
 <body>
 
-    <!-- ===== HEADER ===== -->
-    <header class="sticky top-0 z-50 bg-[rgba(251,248,244,0.94)] backdrop-blur-md border-b border-[#efe7e1]">
+    <!-- HEADER -->
+    <header class="sticky top-0 z-50 bg-[rgba(250,248,245,0.94)] backdrop-blur-md border-b border-[#e8e2dc]">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
             <a href="{{ url_for('index') }}" class="flex items-center gap-3 group">
-                <div class="w-11 h-11 rounded-2xl logo-mark flex items-center justify-center text-white font-bold text-lg shadow-md transition-all duration-300 group-hover:scale-105">JL</div>
+                <div class="w-11 h-11 rounded-2xl logo-mark flex items-center justify-center text-white font-bold text-lg shadow-md transition-all duration-300 group-hover:scale-105">CF</div>
                 <div class="hidden sm:block">
-                    <div class="text-lg font-bold tracking-tight" style="color: var(--jenny-deep);">jennie langaas<span style="color: var(--jenny-clay);"> beauty</span></div>
-                    <div class="text-[10px] uppercase tracking-[0.2em] font-medium" style="color: var(--jenny-muted);">Skincare · Est. 2026</div>
+                    <div class="text-lg font-bold tracking-tight" style="color: var(--cf-deep);">christie frost<span style="color: var(--cf-sage);"> beauty</span></div>
+                    <div class="text-[10px] uppercase tracking-[0.2em] font-medium" style="color: var(--cf-muted);">Skincare · Est. 2026</div>
                 </div>
             </a>
-            <a href="{{ url_for('index') }}" class="flex items-center gap-2 text-sm font-medium transition-colors" style="color: var(--jenny-soft);" onmouseover="this.style.color='#b06e5c'" onmouseout="this.style.color='#6b5b4f'">
+            <a href="{{ url_for('index') }}" class="flex items-center gap-2 text-sm font-medium transition-colors" style="color: var(--cf-soft);" onmouseover="this.style.color='#7a9c8e'" onmouseout="this.style.color='#5c5551'">
                 <i class="fas fa-arrow-left text-xs"></i>
                 <span class="hidden sm:inline">Continue Shopping</span>
                 <span class="sm:hidden">Back</span>
@@ -97,14 +99,13 @@
         </div>
     </header>
 
-    <!-- ===== MAIN ===== -->
+    <!-- MAIN -->
     <main class="max-w-6xl mx-auto px-4 sm:px-6 py-10 md:py-14">
 
-        <!-- Page Title -->
         <div class="mb-10">
-            <span class="text-xs font-semibold tracking-[0.2em] uppercase" style="color: var(--jenny-clay);">Your Selection</span>
-            <h1 class="serif text-4xl md:text-5xl mt-1" style="color: var(--jenny-deep);">Your Bag</h1>
-            <p class="mt-2 text-sm" style="color: var(--jenny-muted);">
+            <span class="text-xs font-semibold tracking-[0.2em] uppercase" style="color: var(--cf-sage);">Your Selection</span>
+            <h1 class="serif text-4xl md:text-5xl mt-1" style="color: var(--cf-deep);">Your Bag</h1>
+            <p class="mt-2 text-sm" style="color: var(--cf-muted);">
                 {{ total_items }} item{% if total_items != 1 %}s{% endif %} in your bag
             </p>
         </div>
@@ -112,46 +113,40 @@
         {% if cart_items %}
         <div class="grid lg:grid-cols-3 gap-8 lg:gap-10">
 
-            <!-- ===== CART ITEMS ===== -->
+            <!-- CART ITEMS -->
             <div class="lg:col-span-2 space-y-4">
                 {% for item in cart_items %}
                 <div class="cart-card p-5 md:p-6" id="item-{{ item.id }}">
                     <div class="flex gap-4 md:gap-5">
-
-                        <!-- Product Image -->
-                        <div class="w-24 h-24 md:w-28 md:h-28 rounded-2xl overflow-hidden flex-shrink-0" style="background: var(--jenny-sand);">
+                        <div class="w-24 h-24 md:w-28 md:h-28 rounded-2xl overflow-hidden flex-shrink-0" style="background: var(--cf-mist);">
                             <img src="{{ item.image }}" alt="{{ item.name }}" class="w-full h-full object-cover">
                         </div>
-
-                        <!-- Product Info -->
                         <div class="flex-1 min-w-0">
                             <div class="flex justify-between gap-3">
                                 <div class="min-w-0">
-                                    <h3 class="font-semibold text-base md:text-lg truncate" style="color: var(--jenny-deep);">{{ item.name }}</h3>
+                                    <h3 class="font-semibold text-base md:text-lg truncate" style="color: var(--cf-deep);">{{ item.name }}</h3>
                                     <div class="flex items-center gap-2 mt-1">
                                         {% if item.type == 'bundle' %}
                                         <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bundle-tag">Bundle</span>
                                         {% endif %}
-                                        <p class="text-sm" style="color: var(--jenny-muted);">${{ "%.2f"|format(item.price) }} each</p>
+                                        <p class="text-sm" style="color: var(--cf-muted);">${{ "%.2f"|format(item.price) }} each</p>
                                     </div>
                                 </div>
-                                <button onclick="removeItem('{{ item.id }}')" class="text-[#c9b3a2] hover:text-[#b06e5c] transition-colors flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#f5efe8]" title="Remove item">
+                                <button onclick="removeItem('{{ item.id }}')" class="text-[#c8bdb4] hover:text-[#7a9c8e] transition-colors flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#f0eef6]" title="Remove item">
                                     <i class="fas fa-trash-alt text-sm"></i>
                                 </button>
                             </div>
-
-                            <!-- Quantity + Line Total -->
                             <div class="flex items-center justify-between mt-4">
                                 <div class="flex items-center gap-2">
                                     <button onclick="updateQuantity('{{ item.id }}', 'decrease')" class="qty-btn w-8 h-8 rounded-full flex items-center justify-center">
                                         <i class="fas fa-minus text-[10px]"></i>
                                     </button>
-                                    <span class="font-semibold w-8 text-center text-sm" id="qty-{{ item.id }}" style="color: var(--jenny-deep);">{{ item.quantity }}</span>
+                                    <span class="font-semibold w-8 text-center text-sm" id="qty-{{ item.id }}" style="color: var(--cf-deep);">{{ item.quantity }}</span>
                                     <button onclick="updateQuantity('{{ item.id }}', 'increase')" class="qty-btn w-8 h-8 rounded-full flex items-center justify-center">
                                         <i class="fas fa-plus text-[10px]"></i>
                                     </button>
                                 </div>
-                                <span class="font-bold text-base md:text-lg" id="item-total-{{ item.id }}" style="color: var(--jenny-deep);">
+                                <span class="font-bold text-base md:text-lg" id="item-total-{{ item.id }}" style="color: var(--cf-deep);">
                                     ${{ "%.2f"|format(item.item_total) }}
                                 </span>
                             </div>
@@ -160,48 +155,47 @@
                 </div>
                 {% endfor %}
 
-                <!-- Trust Badges under items -->
-                <div class="flex flex-wrap items-center justify-center gap-6 pt-4 text-xs" style="color: var(--jenny-muted);">
-                    <div class="flex items-center gap-2"><i class="fas fa-truck text-[#c98b7a]"></i> Free shipping over $40</div>
-                    <div class="flex items-center gap-2"><i class="fas fa-undo text-[#c98b7a]"></i> 30-day returns</div>
-                    <div class="flex items-center gap-2"><i class="fas fa-lock text-[#c98b7a]"></i> Secure checkout</div>
+                <div class="flex flex-wrap items-center justify-center gap-6 pt-4 text-xs" style="color: var(--cf-muted);">
+                    <div class="flex items-center gap-2"><i class="fas fa-truck text-[#7a9c8e]"></i> Free shipping over $40</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-undo text-[#7a9c8e]"></i> 30-day returns</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-lock text-[#7a9c8e]"></i> Secure checkout</div>
                 </div>
             </div>
 
-            <!-- ===== ORDER SUMMARY ===== -->
+            <!-- ORDER SUMMARY -->
             <div class="lg:col-span-1">
                 <div class="summary-card p-6 md:p-7 sticky top-24">
-                    <h2 class="serif text-2xl mb-1" style="color: var(--jenny-deep);">Order Summary</h2>
-                    <p class="text-xs mb-5" style="color: var(--jenny-muted);">Taxes calculated at checkout</p>
+                    <h2 class="serif text-2xl mb-1" style="color: var(--cf-deep);">Order Summary</h2>
+                    <p class="text-xs mb-5" style="color: var(--cf-muted);">Taxes calculated at checkout</p>
 
                     <div class="space-y-3 text-sm">
                         <div class="flex justify-between">
-                            <span style="color: var(--jenny-soft);">Subtotal</span>
-                            <span class="font-semibold" id="subtotal" style="color: var(--jenny-deep);">${{ "%.2f"|format(subtotal) }}</span>
+                            <span style="color: var(--cf-soft);">Subtotal</span>
+                            <span class="font-semibold" id="subtotal" style="color: var(--cf-deep);">${{ "%.2f"|format(subtotal) }}</span>
                         </div>
                         <div class="flex justify-between items-center">
-                            <span style="color: var(--jenny-soft);">Shipping</span>
+                            <span style="color: var(--cf-soft);">Shipping</span>
                             <span id="shipping">
                                 {% if shipping == 0 %}
                                 <span class="free-ship"><i class="fas fa-check mr-1"></i>FREE</span>
                                 {% else %}
-                                <span class="font-semibold" style="color: var(--jenny-deep);">${{ "%.2f"|format(shipping) }}</span>
+                                <span class="font-semibold" style="color: var(--cf-deep);">${{ "%.2f"|format(shipping) }}</span>
                                 {% endif %}
                             </span>
                         </div>
-                        <div class="border-t pt-4 mt-2" style="border-color: var(--jenny-border);">
+                        <div class="border-t pt-4 mt-2" style="border-color: var(--cf-border);">
                             <div class="flex justify-between items-baseline">
-                                <span class="font-semibold" style="color: var(--jenny-deep);">Total</span>
-                                <span class="text-2xl font-bold" id="total" style="color: var(--jenny-deep);">${{ "%.2f"|format(total) }}</span>
+                                <span class="font-semibold" style="color: var(--cf-deep);">Total</span>
+                                <span class="text-2xl font-bold" id="total" style="color: var(--cf-deep);">${{ "%.2f"|format(total) }}</span>
                             </div>
                         </div>
                     </div>
 
-                    <a href="{{ url_for('checkout') }}" class="btn-jenny w-full py-4 rounded-2xl text-center block mt-6 text-sm md:text-base">
+                    <a href="{{ url_for('checkout') }}" class="btn-cf w-full py-4 rounded-2xl text-center block mt-6 text-sm md:text-base">
                         <i class="fas fa-lock mr-2 text-xs"></i> Proceed to Checkout
                     </a>
 
-                    <div class="mt-5 flex items-center justify-center gap-4 text-[#c9b3a2] text-lg">
+                    <div class="mt-5 flex items-center justify-center gap-4 text-[#c8bdb4] text-lg">
                         <i class="fab fa-cc-visa"></i>
                         <i class="fab fa-cc-mastercard"></i>
                         <i class="fab fa-cc-amex"></i>
@@ -209,36 +203,36 @@
                         <i class="fab fa-cc-apple-pay"></i>
                     </div>
 
-                    <p class="text-[11px] text-center mt-4 leading-relaxed" style="color: var(--jenny-muted);">
-                        🌿 Clean, cruelty-free skincare.<br>Thank you for choosing Jennie Langaas.
+                    <p class="text-[11px] text-center mt-4 leading-relaxed" style="color: var(--cf-muted);">
+                        🌿 Clean, cruelty-free skincare.<br>Thank you for choosing Christie Frost.
                     </p>
                 </div>
             </div>
         </div>
 
         {% else %}
-        <!-- ===== EMPTY STATE ===== -->
+        <!-- EMPTY STATE -->
         <div class="text-center py-20 md:py-28">
-            <div class="w-24 h-24 mx-auto rounded-full flex items-center justify-center mb-6" style="background: var(--jenny-sand);">
-                <i class="fas fa-shopping-bag text-4xl" style="color: #c9b3a2;"></i>
+            <div class="w-24 h-24 mx-auto rounded-full flex items-center justify-center mb-6" style="background: var(--cf-mist);">
+                <i class="fas fa-shopping-bag text-4xl" style="color: #c8bdb4;"></i>
             </div>
-            <h2 class="serif text-3xl mb-2" style="color: var(--jenny-deep);">Your bag is empty</h2>
-            <p class="text-sm mb-8 max-w-sm mx-auto" style="color: var(--jenny-muted);">Looks like you haven't added anything yet. Explore our clean skincare collection and find your new favorites.</p>
-            <a href="{{ url_for('index') }}" class="btn-jenny inline-block px-10 py-4 rounded-2xl text-sm font-semibold">
+            <h2 class="serif text-3xl mb-2" style="color: var(--cf-deep);">Your bag is empty</h2>
+            <p class="text-sm mb-8 max-w-sm mx-auto" style="color: var(--cf-muted);">Looks like you haven't added anything yet. Explore our clean skincare collection and find your new favorites.</p>
+            <a href="{{ url_for('index') }}" class="btn-cf inline-block px-10 py-4 rounded-2xl text-sm font-semibold">
                 <i class="fas fa-shopping-bag mr-2"></i> Start Shopping
             </a>
         </div>
         {% endif %}
 
-        <!-- ===== CONTACT STRIP ===== -->
-        <div class="mt-16 pt-8 border-t text-center" style="border-color: var(--jenny-border);">
-            <p class="text-xs" style="color: var(--jenny-muted);">
+        <!-- CONTACT STRIP -->
+        <div class="mt-16 pt-8 border-t text-center" style="border-color: var(--cf-border);">
+            <p class="text-xs" style="color: var(--cf-muted);">
                 Questions? Contact us at
-                <a href="mailto:jennielangaasbeautyllc@gmail.com" class="font-medium hover:underline" style="color: var(--jenny-clay);">jennielangaasbeautyllc@gmail.com</a>
-                or call <a href="tel:+17075109811" class="font-medium hover:underline" style="color: var(--jenny-clay);">+1 (707) 510-9811</a>
+                <a href="mailto:christiefrostbeautyandskincare@gmail.com" class="font-medium hover:underline" style="color: var(--cf-sage);">christiefrostbeautyandskincare@gmail.com</a>
+                or call <a href="tel:+12052588482" class="font-medium hover:underline" style="color: var(--cf-sage);">+1 (205) 258-8482</a>
             </p>
-            <p class="text-[11px] mt-2" style="color: #c9b3a2;">
-                11360 Burris Ln, Potter Valley, California 95469
+            <p class="text-[11px] mt-2" style="color: #c8bdb4;">
+                8656 County Road 49, Verbena, AL 36091
             </p>
         </div>
     </main>
@@ -266,7 +260,7 @@
                     if (data.shipping === 0) {
                         shippingEl.innerHTML = '<span class="free-ship"><i class="fas fa-check mr-1"></i>FREE</span>';
                     } else {
-                        shippingEl.innerHTML = `<span class="font-semibold" style="color:#3a2e2a;">$${data.shipping.toFixed(2)}</span>`;
+                        shippingEl.innerHTML = `<span class="font-semibold" style="color:#2d2926;">$${data.shipping.toFixed(2)}</span>`;
                     }
                     document.getElementById('total').textContent = `$${data.total.toFixed(2)}`;
                 }
