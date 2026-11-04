@@ -241,13 +241,22 @@ def index():
             elif product.get('badge') == 'Trending':
                 trending.append(product)
 
+        # Build live cart summary so the shop header can show cart totals safely
+        summary = build_cart_summary()
+
         return render_template('shop.html',
             products=PRODUCTS,
             bundles=BUNDLES,
             best_sellers=best_sellers,
             new_arrivals=new_arrivals,
             trending=trending,
-            all_products=PRODUCTS
+            all_products=PRODUCTS,
+            # Safe defaults for shop header/cart badge (prevents 'total' undefined error)
+            cart_items=summary['cart_items'],
+            subtotal=summary['subtotal'],
+            shipping=summary['shipping'],
+            total=summary['total'],
+            total_items=summary['total_items']
         )
     except Exception as e:
         traceback.print_exc()
