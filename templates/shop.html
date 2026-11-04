@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jennie Langaas Beauty — Wholesale & Retail Skincare</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .serif { font-family: 'Playfair Display', serif; }
+        :root {
+            --jenny-clay: #b06e5c;
+            --jenny-rose: #c98b7a;
+            --jenny-cream: #fbf8f4;
+            --jenny-sand: #f5efe8;
+            --jenny-deep: #3a2e2a;
+            --jenny-soft: #6b5b4f;
+            --jenny-muted: #a09084;
+            --jenny-border: #efe7e1;
+        }
+        body { background-color: var(--jenny-cream); }
+
+        /* hero */
+        .gradient-hero-jenny {
+            background: linear-gradient(145deg, #fbf3ed 0%, #f7e9e1 30%, #f0e2d8 60%, #fbf3ed 100%);
+            position: relative; overflow: hidden;
+        }
+        .hero-blob-jenny {
+            position: absolute; border-radius: 50%; filter: blur(80px);
+            opacity: 0.2; pointer-events: none;
+        }
+        .hero-title-jenny {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.4rem; line-height: 1.05; color: #3a2e2a;
+        }
+        @media (max-width: 768px) { .hero-title-jenny { font-size: 2.7rem; } }
+
+        /* nav */
+        .glass-nav-jenny {
+            background: rgba(252, 249, 245, 0.92);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(210, 190, 175, 0.3);
+            transition: all 0.3s ease;
+        }
+        .glass-nav-jenny.scrolled {
+            background: rgba(252, 249, 245, 0.98);
+            box-shadow: 0 8px 30px rgba(120, 80, 60, 0.08);
+        }
+        .nav-link-jenny {
+            position: relative; font-weight: 500; color: #5a4a40; transition: color 0.3s;
+        }
+        .nav-link-jenny::after {
+            content: ''; position: absolute; bottom: -6px; left: 50%;
+            width: 0; height: 2px; background: #b06e5c;
+            transition: all 0.3s ease; transform: translateX(-50%); border-radius: 2px;
+        }
+        .nav-link-jenny:hover { color: #b06e5c; }
+        .nav-link-jenny:hover::after { width: 80%; }
+
+        /* buttons */
+        .btn-jenny {
+            background: linear-gradient(135deg, #c98b7a 0%, #b06e5c 100%);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: none; cursor: pointer; color: white; font-weight: 600;
+            position: relative; overflow: hidden;
+        }
+        .btn-jenny:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(176, 110, 92, 0.3);
+        }
+        .btn-jenny::after {
+            content: ''; position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.15) 50%, transparent 60%);
+            transform: rotate(45deg) translateX(-100%); transition: all 0.6s ease;
+        }
+        .btn-jenny:hover::after { transform: rotate(45deg) translateX(100%); }
+        .btn-outline-jenny {
+            background: transparent; border: 2px solid #d9c5b8;
+            color: #5a4a40; font-weight: 600; transition: all 0.3s ease;
+        }
+        .btn-outline-jenny:hover {
+            border-color: #b06e5c; color: #b06e5c; background: rgba(176, 110, 92, 0.04);
+        }
+
+        /* product card */
+        .product-card-jenny {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer; border: 1px solid #efe7e1; background: #ffffff;
+            position: relative; overflow: visible; border-radius: 28px;
+        }
+        .product-card-jenny:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(120, 80, 60, 0.08);
+            border-color: #d9c5b8;
+        }
+        .product-image-container-jenny {
+            overflow: hidden; border-radius: 20px; background: #f5efe8;
+            width: 100%; height: 220px;
+        }
+        .product-image-container-jenny.tall { height: 260px; }
+        .product-image-jenny {
+            width: 100%; height: 100%; object-fit: cover; display: block;
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .product-card-jenny:hover .product-image-jenny { transform: scale(1.06); }
+
+        /* badges */
+        .product-badge-jenny {
+            position: absolute; top: 12px; left: 12px; z-index: 10;
+            font-size: 0.7rem; font-weight: 700; padding: 5px 14px;
+            border-radius: 999px; color: white; white-space: nowrap;
+            pointer-events: none; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .badge-best-jenny { background: linear-gradient(135deg, #c98b7a, #b06e5c); }
+        .badge-new-jenny { background: linear-gradient(135deg, #b8a58c, #9e8a74); }
+        .badge-trending-jenny { background: linear-gradient(135deg, #d4a373, #b5835a); }
+        .badge-wholesale-jenny { background: linear-gradient(135deg, #8aa87a, #6f8f5e); }
+
+        /* section titles */
+        .section-title-jenny { font-family: 'Playfair Display', serif; font-weight: 600; color: #3a2e2a; }
+
+        /* float */
+        .animate-float-jenny { animation: floatJenny 6s ease-in-out infinite; }
+        @keyframes floatJenny {
+            0%,100% { transform: translateY(0px); }
+            50% { transform: translateY(-16px); }
+        }
+        .fade-slide-jenny {
+            opacity: 0; transform: translateY(30px);
+            animation: fadeSlideJenny 0.8s ease-out forwards;
+        }
+        @keyframes fadeSlideJenny {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* toast */
+        .toast-jenny {
+            position: fixed; bottom: 30px; right: 30px; z-index: 9999;
+            background: #ffffff; box-shadow: 0 20px 60px rgba(90, 60, 45, 0.12);
+            border-radius: 24px; padding: 18px 26px;
+            animation: slideInJenny 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid #efe7e1;
+        }
+        @keyframes slideInJenny {
+            0% { transform: translateX(100px); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        .hidden { display: none; }
+
+        /* marquee */
+        .marquee-text-jenny { animation: marqueeJenny 28s linear infinite; white-space: nowrap; }
+        @keyframes marqueeJenny {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* category pills */
+        .category-pill-jenny {
+            background: #f5efe8; border: 1px solid #efe7e1;
+            transition: all 0.3s ease; cursor: pointer;
+            font-weight: 500; color: #5a4a40;
+        }
+        .category-pill-jenny:hover {
+            background: #e8ddd2; color: #3a2e2a; border-color: #d9c5b8;
+            transform: translateY(-2px); box-shadow: 0 6px 16px rgba(120, 80, 60, 0.08);
+        }
+        .category-pill-jenny.active {
+            background: #d9c5b8; color: #3a2e2a; border-color: #c9b3a2; font-weight: 600;
+        }
+
+        /* bundle card */
+        .bundle-card-jenny {
+            border: 1px solid #efe7e1;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer; background: #fbf8f4; border-radius: 28px;
+        }
+        .bundle-card-jenny:hover {
+            border-color: #d9c5b8; transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(120, 80, 60, 0.06);
+        }
+        .bundle-card-jenny.popular-jenny {
+            border-color: #d4b48c;
+            background: linear-gradient(135deg, #faf5ef, #f7ede4);
+        }
+
+        /* cart count */
+        .cart-count-jenny {
+            background: #b06e5c; color: white; border-radius: 50%;
+            padding: 2px 8px; font-size: 10px; font-weight: 700;
+            min-width: 20px; text-align: center;
+            box-shadow: 0 2px 8px rgba(176, 110, 92, 0.3);
+        }
+
+        /* logo */
+        .logo-jenny { background: linear-gradient(135deg, #c98b7a, #b06e5c); }
+
+        /* testimonial */
+        .testimonial-card-jenny {
+            transition: all 0.3s ease; border: 1px solid #efe7e1;
+            background: #fbf8f4; border-radius: 28px;
+        }
+        .testimonial-card-jenny:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(120, 80, 60, 0.06);
+            border-color: #d9c5b8;
+        }
+
+        /* wholesale highlight card */
+        .wholesale-card-jenny {
+            background: linear-gradient(135deg, #f0e6da 0%, #e8ddd2 100%);
+            border: 1px solid #d9c5b8;
+            border-radius: 32px;
+            position: relative; overflow: hidden;
+        }
+        .wholesale-card-jenny::before {
+            content: ''; position: absolute; top: -60px; right: -60px;
+            width: 220px; height: 220px; border-radius: 50%;
+            background: rgba(176, 110, 92, 0.08);
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f5efe8; }
+        ::-webkit-scrollbar-thumb { background: #d9c5b8; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+    <!-- ===== TOP BAR ===== -->
+    <div class="bg-[#3a2e2a] text-[#f5efe8] text-xs py-2.5 text-center overflow-hidden relative z-50">
+        <div class="marquee-text-jenny inline-block font-medium tracking-wide">
+            🌿 Complimentary shipping over $40 · 30-Day Glow Guarantee · Wholesale &amp; Retail · Subscribe &amp; save 15% · Jennie Langaas Beauty
+        </div>
+    </div>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="glass-nav-jenny fixed top-0 left-0 right-0 z-50" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <a href="/" class="flex items-center gap-3 group">
+                    <div class="w-12 h-12 rounded-2xl logo-jenny flex items-center justify-center text-white font-bold text-xl shadow-md group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">JL</div>
+                    <div>
+                        <div class="text-xl font-bold tracking-tight text-jenny-deep">jennie langaas<span class="text-[#b06e5c]"> beauty</span></div>
+                        <div class="text-[10px] text-[#a09084] tracking-[0.2em] uppercase font-medium">Wholesale &amp; Retail · Est. 2026</div>
+                    </div>
+                </a>
+                <div class="hidden lg:flex items-center gap-8">
+                    <a href="#shop" class="nav-link-jenny">Shop</a>
+                    <a href="#bundles" class="nav-link-jenny">Bundles</a>
+                    <a href="#wholesale" class="nav-link-jenny">Wholesale</a>
+                    <a href="#about" class="nav-link-jenny">About</a>
+                    <a href="#reviews" class="nav-link-jenny">Reviews</a>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button class="hidden md:block text-[#a09084] hover:text-[#b06e5c] transition text-lg"><i class="fas fa-search"></i></button>
+                    <button class="hidden md:block text-[#a09084] hover:text-[#b06e5c] transition text-lg relative">
+                        <i class="far fa-heart"></i>
+                        <span class="absolute -top-1 -right-2 text-[8px] bg-[#b06e5c] text-white rounded-full px-1.5 py-0.5 leading-none">2</span>
+                    </button>
+                    <a href="/cart" class="relative text-[#5a4a40] hover:text-[#b06e5c] transition text-xl">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="cart-count-jenny absolute -top-2 -right-3 text-xs" id="cartCount">0</span>
+                    </a>
+                    <button onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})" class="hidden md:block px-6 py-2.5 rounded-full btn-jenny text-sm shadow-md hover:shadow-xl">Shop Now</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section class="gradient-hero-jenny min-h-[85vh] flex items-center pt-36 relative">
+        <div class="hero-blob-jenny w-[600px] h-[600px] bg-[#d9c5b8] top-[-200px] right-[-100px]"></div>
+        <div class="hero-blob-jenny w-[400px] h-[400px] bg-[#c9b3a2] bottom-[-100px] left-[-100px]"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="fade-slide-jenny">
+                    <div class="inline-flex items-center gap-2 bg-white/70 backdrop-blur-sm px-5 py-2.5 rounded-full text-sm text-[#8b6b5a] font-semibold mb-6 border border-[#efe7e1] shadow-sm">
+                        <span class="w-2.5 h-2.5 bg-[#b06e5c] rounded-full animate-pulse"></span> Wholesale &amp; Retail Skincare
+                    </div>
+                    <h1 class="hero-title-jenny">Radiance, <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-[#c98b7a] to-[#9e7a68]">naturally yours</span></h1>
+                    <p class="text-[#6b5b4f] text-lg mt-4 max-w-md leading-relaxed">Clean, effective skincare made with intention. Dermatologist-tested, cruelty-free, and designed for your real glow — available for both retail and wholesale.</p>
+                    <div class="flex flex-wrap gap-4 mt-8">
+                        <a href="#shop" class="px-8 py-4 rounded-full btn-jenny text-white font-bold shadow-lg flex items-center gap-2"><i class="fas fa-shopping-bag"></i> Shop Retail</a>
+                        <a href="#wholesale" class="px-8 py-4 rounded-full btn-outline-jenny font-bold flex items-center gap-2"><i class="fas fa-boxes-stacked"></i> Wholesale Enquiry</a>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-6 mt-8 text-[#a09084] text-sm">
+                        <div class="flex items-center gap-2"><span class="text-2xl">🌿</span> 50K+ Happy Customers</div>
+                        <div class="flex items-center gap-2"><span class="text-2xl">🐰</span> Cruelty-Free</div>
+                        <div class="flex items-center gap-2"><span class="text-2xl">💧</span> Dermatologist Tested</div>
+                    </div>
+                </div>
+
+                <!-- HERO VISUAL — REAL SKINCARE IMAGES (FIXED) -->
+                <div class="relative animate-float-jenny hidden lg:block">
+
+                    <!-- Main hero image card -->
+                    <div class="relative rounded-[32px] overflow-hidden shadow-2xl border-4 border-white/60 bg-[#f5efe8]">
+                        <img
+                            src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800&h=900&fit=crop&auto=format&q=80"
+                            alt="Luxury skincare serum bottle with dropper"
+                            class="w-full h-[480px] object-cover block"
+                            loading="eager"
+                            onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&h=900&fit=crop&auto=format&q=80';"
+                        >
+                        <div class="absolute top-5 left-5 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full text-xs font-bold text-[#b06e5c] shadow-md">
+                            ✨ New Collection 2026
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-5 left-5 text-white">
+                            <p class="text-xs uppercase tracking-widest opacity-80">Signature Line</p>
+                            <p class="text-lg font-bold">Glow Repair Serum</p>
+                        </div>
+                    </div>
+
+                    <!-- Floating product card (top-right) -->
+                    <div class="absolute -top-6 -right-6 bg-white/95 backdrop-blur-sm rounded-2xl p-3 shadow-xl border border-white/60 w-40 hover:scale-105 transition-transform duration-300">
+                        <div class="rounded-xl overflow-hidden mb-2 h-20 bg-[#f5efe8]">
+                            <img
+                                src="https://images.unsplash.com/photo-1556228720-195a672e8a03?w=300&h=300&fit=crop&auto=format&q=80"
+                                alt="Hydrating face cream jar"
+                                class="w-full h-full object-cover block"
+                                loading="lazy"
+                                onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#e8ddd2,#d9c5b8)';"
+                            >
+                        </div>
+                        <p class="font-bold text-[#3a2e2a] text-xs">Hydrating Cream</p>
+                        <p class="text-[#a09084] text-[10px]">Deep Moisture</p>
+                        <div class="flex items-center justify-between mt-1">
+                            <span class="text-sm font-bold text-[#3a2e2a]">$28.99</span>
+                            <span class="text-[9px] bg-[#e8ddd2] text-[#5a4a40] px-1.5 py-0.5 rounded-full font-semibold">New</span>
+                        </div>
+                    </div>
+
+                    <!-- Floating rating card (bottom-left) -->
+                    <div class="absolute -bottom-6 -left-6 bg-white/95 backdrop-blur-sm rounded-2xl px-5 py-3 shadow-xl border border-white/60">
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-yellow-500 text-sm">★★★★★</span>
+                            <span class="text-[#3a2e2a] font-bold text-sm">4.9</span>
+                            <span class="text-[#a09084] text-[10px]">(50K+)</span>
+                        </div>
+                        <p class="text-[#5a4a40] text-xs font-medium mt-0.5">"The best clean skincare."</p>
+                    </div>
+
+                    <!-- Decorative botanical circle -->
+                    <div class="absolute top-1/2 -right-12 w-24 h-24 rounded-full overflow-hidden border-4 border-white/80 shadow-xl hidden xl:block bg-[#e8ddd2]">
+                        <img
+                            src="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=200&h=200&fit=crop&auto=format&q=80"
+                            alt="Botanical skincare ingredients"
+                            class="w-full h-full object-cover block"
+                            loading="lazy"
+                            onerror="this.style.display='none';"
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CATEGORY PILLS ===== -->
+    <section class="py-8 bg-white/70 backdrop-blur-sm border-b border-[#efe7e1] sticky top-20 z-40">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-wrap justify-center gap-3">
+                <span class="category-pill-jenny active px-6 py-2.5 rounded-full text-sm">All Products</span>
+                <span class="category-pill-jenny px-6 py-2.5 rounded-full text-sm">Serums</span>
+                <span class="category-pill-jenny px-6 py-2.5 rounded-full text-sm">Moisturizers</span>
+                <span class="category-pill-jenny px-6 py-2.5 rounded-full text-sm">Sun Care</span>
+                <span class="category-pill-jenny px-6 py-2.5 rounded-full text-sm">Masks</span>
+                <span class="category-pill-jenny px-6 py-2.5 rounded-full text-sm">Cleansers</span>
+                <span class="category-pill-jenny px-6 py-2.5 rounded-full text-sm">Toners</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== BEST SELLERS ===== -->
+    <section id="shop" class="py-20 px-4 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-14">
+                <span class="text-[#b06e5c] text-sm font-semibold tracking-[0.2em] uppercase">Jennie's Picks</span>
+                <h2 class="section-title-jenny text-5xl mt-2">Customer Favorites</h2>
+                <p class="text-[#a09084] mt-3 max-w-md mx-auto">The products our retail and wholesale customers can't stop raving about</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                <!-- Glow Serum -->
+                <div class="product-card-jenny p-6 text-center">
+                    <div class="relative">
+                        <span class="product-badge-jenny badge-best-jenny">⭐ Best Seller</span>
+                        <div class="product-image-container-jenny tall" style="background: #f5efe8;">
+                            <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400&h=400&fit=crop&auto=format" alt="Glow Serum" class="product-image-jenny" loading="lazy" onerror="this.style.display='none'">
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-jenny-deep text-lg mt-4">Glow Repair Serum</h3>
+                    <p class="text-[#a09084] text-sm mt-2">Powerful vitamin C for radiant skin</p>
+                    <div class="flex items-center justify-center gap-1 mt-3 text-sm">
+                        <i class="fas fa-star text-yellow-500"></i><i class="fas fa-star text-yellow-500"></i><i class="fas fa-star text-yellow-500"></i><i class="fas fa-star text-yellow-500"></i><i class="fas fa-star text-yellow-500"></i>
+                        <span class="text-[#a09084] text-xs ml-1">(234)</span>
+                    </div>
+                    <div class="mt-4"><span class="text-2xl font-bold text-jenny-deep">$34.99</span></div>
+                    <button onclick="addToCart('glow_serum')" class="mt-4 w-full py-3.5 rounded-xl btn-jenny text-white font-semibold"><i class="fas fa-plus mr-2"></i> Add to Bag</button>
+                </div>
+
+                <!-- Hydrating Cream -->
+                <div class="product-card-jenny p-6 text-center">
+                    <div class="relative">
+                        <span class="product-badge-jenny badge-new-jenny">🌟 New</span>
+                        <div class="product-image-container-jenny tall" style="background: #f5efe8;">
+                            <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400&h=400&fit=crop&auto=format" alt="Hydrating Cream" class="product-image-jenny" loading="lazy" onerror="this.style.display='none'">
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-jenny-deep text-lg mt-4">Hydrating Moisture Cream</h3>
+                    <p class="text-[#a09084] text-sm mt-2">Deep hydration with hyaluronic acid</p>
+                    <div class="flex items-center justify-center gap-1 mt-3 text-sm">
+                        <i class="fas fa-star text-yellow-500"></i><i class="fas fa-star text-yellow-500"></i><i class="fas fa-star text-yellow-500"></i><i class="fas fa-star text-yellow-500"></i><i class="fas fa-star text-yellow-500"></i>
+                        <span class="text-[#a09084] text-xs ml-1">(189)</span>
+                    </div>
+                    <div class="mt-4"><span class="text-2xl font-bold text-jenny-deep">$28.99</span></div>
+                    <button onclick="addToCart('hydrating_cream')" class="mt-4 w-full py-3.5 rounded-xl btn-jenny text-white font-semibold"><i class="fas fa-plus mr-2"></i> Add to Bag</button>
+                </div>
+
+                <!-- Peptide Cream -->
+                <div class="product-card-jenny p-6 text-center">
+                    <div class="relative">
+                        <span class="product-badge-jenny badge-new-jenny">🌟 New</span>
+                        <div class="product-image-container-jenny tall" style="background: #f5efe8;">
+                            <img src="https://images.unsplash.com/photo-1612817288484-6f916006741a?w=400&h=400&fit=crop&auto=format" alt="Peptide Cream" class="product-image-jenny" loading="lazy" onerror="this.style.display='none'">
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-jenny-deep text-lg mt-4">Peptide Firming Cream</h3>
+                    <p class="text-[#a09084] text-sm mt-2">Advanced peptides for firming</p>
+                    <div class="flex items-center justify-center gap-1 mt-3 text-sm">
+                        <i class="fas fa-star text-yellow-500"></i><i class="fas fa-star text-yellow-500"></i><i class="fas fa-star text-yellow-500"></i><i class="fas fa-star text-yellow-500"></i><i class="fas fa-star text-yellow-500"></i>
+                        <span class="text-[#a09084] text-xs ml-1">(167)</span>
+                    </div>
+                    <div class="mt-4"><span class="text-2xl font-bold text-jenny-deep">$38.99</span></div>
+                    <button onclick="addToCart('peptide_cream')" class="mt-4 w-full py-3.5 rounded-xl btn-jenny text-white font-semibold"><i class="fas fa-plus mr-2"></i> Add to Bag</button>
+                </div>
+
+                <!-- Rose Toner -->
+                <div class="product-card-jenny p-6 text-center">
+                    <div class="relative">
+                        <span class="product-badge-jenny badge-trending-jenny">🔥 Trending</span>
+                        <div class="product-image-container-jenny tall" style="background: #f5efe8;">
+                            <img src="https://images.unsplash.com/photo-1586611292717-f828b167408c?w=400&h=400&fit=crop&auto=format" alt="Rose Toner" class="product-image-jenny" loading="lazy" onerror="this.style.display='none'">
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-jenny-deep text-lg mt-4">Rose Hydrating Toner</h3>
+                    <p class="text-[#a09084] text-sm mt-2">Gentle rose-infused hydrating toner</p>
+                    <div class="flex items-center justify-center gap-1 mt-3 text-sm">
+                        <i class="fas fa-star text-yellow-500"></i><i class="fas fa-star text-yellow-500"></i><i class="fas fa-star text-yellow-500"></i><i class="fas fa-star text-yellow-500"></i><i class="fas fa-star text-yellow-500"></i>
+                        <span class="text-[#a09084] text-xs ml-1">(145)</span>
+                    </div>
+                    <div class="mt-4"><span class="text-2xl font-bold text-jenny-deep">$21.99</span></div>
+                    <button onclick="addToCart('rose_toner')" class="mt-4 w-full py-3.5 rounded-xl btn-jenny text-white font-semibold"><i class="fas fa-plus mr-2"></i> Add to Bag</button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ALL PRODUCTS ===== -->
+    <section id="new" class="py-20 px-4 bg-[#fbf8f4]">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-14">
+                <span class="text-[#b06e5c] text-sm font-semibold tracking-[0.2em] uppercase">Shop All</span>
+                <h2 class="section-title-jenny text-5xl mt-2">Complete Collection</h2>
+                <p class="text-[#a09084] mt-3">Every product designed for your best skin — available retail &amp; wholesale</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {% for id, product in all_products.items() %}
+                <div class="bg-white rounded-3xl p-6 text-center shadow-sm hover:shadow-xl transition-all duration-300 border border-[#efe7e1] hover:border-[#d9c5b8]">
+                    <div class="product-image-container-jenny mb-4" style="background: #f5efe8;">
+                        <img src="{{ product.image }}" alt="{{ product.name }}" class="product-image-jenny" loading="lazy" onerror="this.style.display='none'">
+                    </div>
+                    <h3 class="font-bold text-jenny-deep">{{ product.name }}</h3>
+                    <p class="text-[#a09084] text-xs mt-1">{{ product.category }}</p>
+                    <div class="flex items-center justify-center gap-0.5 mt-2 text-sm">
+                        {% for i in range(5) %}
+                            {% if i < product.rating|round(0, 'floor') %}
+                                <i class="fas fa-star text-yellow-500"></i>
+                            {% else %}
+                                <i class="far fa-star text-gray-300"></i>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="mt-3"><span class="text-xl font-bold text-jenny-deep">${{ product.price }}</span></div>
+                    <button onclick="addToCart('{{ id }}')" class="mt-4 w-full py-2.5 rounded-xl bg-[#f5efe8] hover:bg-[#e8ddd2] text-[#5a4a40] hover:text-[#3a2e2a] font-semibold transition text-sm"><i class="fas fa-plus mr-1"></i> Add to Bag</button>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== BUNDLES ===== -->
+    <section id="bundles" class="py-20 px-4 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-14">
+                <span class="text-[#b06e5c] text-sm font-semibold tracking-[0.2em] uppercase">Save More</span>
+                <h2 class="section-title-jenny text-5xl mt-2">Perfect Bundles</h2>
+                <p class="text-[#a09084] mt-3">Complete routines at an incredible value — retail &amp; wholesale</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {% for id, bundle in bundles.items() %}
+                <div class="bundle-card-jenny {% if bundle.popular %}popular-jenny{% endif %} p-6 text-center">
+                    {% if bundle.popular %}
+                    <span class="text-xs font-bold text-[#8b6b5a] bg-[#faf5ef] px-3 py-1.5 rounded-full inline-block mb-3 border border-[#d9c5b8]">⭐ Best Value</span>
+                    {% endif %}
+                    <div class="product-image-container-jenny mb-4" style="background: #f5efe8;">
+                        <img src="{{ bundle.image }}" alt="{{ bundle.name }}" class="product-image-jenny" loading="lazy" onerror="this.style.display='none'">
+                    </div>
+                    <h3 class="font-bold text-jenny-deep text-lg">{{ bundle.name }}</h3>
+                    <p class="text-[#a09084] text-sm mt-1">{{ bundle.products|length }} Products Included</p>
+                    <div class="mt-3">
+                        <span class="text-2xl font-bold text-jenny-deep">${{ bundle.price }}</span>
+                        <span class="text-[#a09084] text-sm line-through ml-2">${{ "%.2f"|format(bundle.price + bundle.savings) }}</span>
+                        <br>
+                        <span class="text-[#7a9c6e] text-sm font-semibold">Save ${{ bundle.savings }}</span>
+                    </div>
+                    <button onclick="addToCart('{{ id }}')" class="mt-4 w-full py-3.5 rounded-xl btn-jenny text-white font-semibold"><i class="fas fa-plus mr-2"></i> Add Bundle</button>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== WHOLESALE SECTION ===== -->
+    <section id="wholesale" class="py-20 px-4 bg-[#fbf8f4]">
+        <div class="max-w-7xl mx-auto">
+            <div class="wholesale-card-jenny p-8 md:p-12 relative z-10">
+                <div class="grid md:grid-cols-2 gap-10 items-center">
+                    <div>
+                        <span class="text-[#8b6b5a] text-sm font-semibold tracking-[0.2em] uppercase">For Businesses</span>
+                        <h2 class="serif text-4xl md:text-5xl mt-2" style="color: var(--jenny-deep);">Wholesale Programme</h2>
+                        <p class="mt-4 text-[#6b5b4f] leading-relaxed">Jennie Langaas Beauty and Skincare Products LLC supplies both retail customers and wholesale partners. We offer competitive trade pricing, bulk order support, and dedicated account management for salons, spas, retailers and resellers.</p>
+                        <ul class="mt-6 space-y-3 text-sm" style="color: var(--jenny-soft);">
+                            <li class="flex items-center gap-3"><i class="fas fa-check-circle" style="color: #8aa87a;"></i> Tiered wholesale pricing on all products</li>
+                            <li class="flex items-center gap-3"><i class="fas fa-check-circle" style="color: #8aa87a;"></i> Minimum order quantities starting at 24 units</li>
+                            <li class="flex items-center gap-3"><i class="fas fa-check-circle" style="color: #8aa87a;"></i> Private label &amp; custom bundle options</li>
+                            <li class="flex items-center gap-3"><i class="fas fa-check-circle" style="color: #8aa87a;"></i> Dedicated wholesale account manager</li>
+                        </ul>
+                        <div class="flex flex-wrap gap-4 mt-8">
+                            <a href="mailto:jennielangaasbeautyllc@gmail.com?subject=Wholesale%20Enquiry" class="px-8 py-4 rounded-full btn-jenny text-white font-bold flex items-center gap-2"><i class="fas fa-envelope"></i> Wholesale Enquiry</a>
+                            <a href="tel:+17075109811" class="px-8 py-4 rounded-full btn-outline-jenny font-bold flex items-center gap-2"><i class="fas fa-phone"></i> +1 (707) 510-9811</a>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-5 text-center border border-white/60">
+                            <div class="text-3xl mb-2">📦</div>
+                            <p class="font-bold text-jenny-deep text-lg">Bulk Orders</p>
+                            <p class="text-[#a09084] text-xs mt-1">Flexible MOQs</p>
+                        </div>
+                        <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-5 text-center border border-white/60">
+                            <div class="text-3xl mb-2">💼</div>
+                            <p class="font-bold text-jenny-deep text-lg">Trade Pricing</p>
+                            <p class="text-[#a09084] text-xs mt-1">Competitive margins</p>
+                        </div>
+                        <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-5 text-center border border-white/60">
+                            <div class="text-3xl mb-2">🏷️</div>
+                            <p class="font-bold text-jenny-deep text-lg">Private Label</p>
+                            <p class="text-[#a09084] text-xs mt-1">Your brand, our formula</p>
+                        </div>
+                        <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-5 text-center border border-white/60">
+                            <div class="text-3xl mb-2">🤝</div>
+                            <p class="font-bold text-jenny-deep text-lg">Dedicated Support</p>
+                            <p class="text-[#a09084] text-xs mt-1">Account manager</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ABOUT / WHY US ===== -->
+    <section id="about" class="py-20 px-4 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-14">
+                <span class="text-[#b06e5c] text-sm font-semibold tracking-[0.2em] uppercase">About Jennie Langaas</span>
+                <h2 class="section-title-jenny text-5xl mt-2">Who We Are</h2>
+            </div>
+
+            <!-- Company statement -->
+            <div class="max-w-3xl mx-auto text-center mb-14">
+                <p class="text-[#6b5b4f] text-lg leading-relaxed">
+                    <strong style="color: var(--jenny-deep);">Jennie Langaas Beauty and Skincare Products LLC</strong> is a California-based beauty company that specialises in the <strong>wholesale and retail sale</strong> of premium beauty and skincare products. We serve individual retail customers as well as salons, spas, retailers and resellers with clean, effective, dermatologist-tested formulas.
+                </p>
+            </div>
+
+            <!-- Pillars -->
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="text-center group">
+                    <div class="w-20 h-20 mx-auto rounded-2xl bg-[#f5efe8] group-hover:bg-[#e8ddd2] flex items-center justify-center text-4xl mb-4 transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg">🌿</div>
+                    <h3 class="font-bold text-jenny-deep text-lg">Clean Ingredients</h3>
+                    <p class="text-[#a09084] text-sm mt-2 leading-relaxed">Paraben-free, sulfate-free, and cruelty-free formulas</p>
+                </div>
+                <div class="text-center group">
+                    <div class="w-20 h-20 mx-auto rounded-2xl bg-[#f5efe8] group-hover:bg-[#e8ddd2] flex items-center justify-center text-4xl mb-4 transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg">🔬</div>
+                    <h3 class="font-bold text-jenny-deep text-lg">Dermatologist Tested</h3>
+                    <p class="text-[#a09084] text-sm mt-2 leading-relaxed">Clinically tested for safety and efficacy</p>
+                </div>
+                <div class="text-center group">
+                    <div class="w-20 h-20 mx-auto rounded-2xl bg-[#f5efe8] group-hover:bg-[#e8ddd2] flex items-center justify-center text-4xl mb-4 transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg">🏬</div>
+                    <h3 class="font-bold text-jenny-deep text-lg">Wholesale &amp; Retail</h3>
+                    <p class="text-[#a09084] text-sm mt-2 leading-relaxed">Serving both individual customers and businesses</p>
+                </div>
+                <div class="text-center group">
+                    <div class="w-20 h-20 mx-auto rounded-2xl bg-[#f5efe8] group-hover:bg-[#e8ddd2] flex items-center justify-center text-4xl mb-4 transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg">❤️</div>
+                    <h3 class="font-bold text-jenny-deep text-lg">Loved by Thousands</h3>
+                    <p class="text-[#a09084] text-sm mt-2 leading-relaxed">Over 50,000 happy customers worldwide</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TESTIMONIALS ===== -->
+    <section id="reviews" class="py-20 px-4 bg-[#fbf8f4]">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-14">
+                <span class="text-[#b06e5c] text-sm font-semibold tracking-[0.2em] uppercase">Testimonials</span>
+                <h2 class="section-title-jenny text-5xl mt-2">What Our Customers Say</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="testimonial-card-jenny p-8">
+                    <div class="flex text-yellow-500 text-sm mb-3">★★★★★</div>
+                    <p class="text-[#5a4a40] italic leading-relaxed">"This serum completely transformed my skin! I've never felt more confident without makeup."</p>
+                    <div class="mt-4 flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-full bg-[#e8ddd2] flex items-center justify-center font-bold text-[#8b6b5a] text-lg flex-shrink-0">SM</div>
+                        <div><p class="font-semibold text-jenny-deep">Sarah M.</p><p class="text-[#a09084] text-xs">Verified Retail Buyer</p></div>
+                    </div>
+                </div>
+                <div class="testimonial-card-jenny p-8">
+                    <div class="flex text-yellow-500 text-sm mb-3">★★★★★</div>
+                    <p class="text-[#5a4a40] italic leading-relaxed">"The hydrating cream is so moisturizing! My skin feels amazing."</p>
+                    <div class="mt-4 flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-full bg-[#e8ddd2] flex items-center justify-center font-bold text-[#8b6b5a] text-lg flex-shrink-0">JK</div>
+                        <div><p class="font-semibold text-jenny-deep">Jessica K.</p><p class="text-[#a09084] text-xs">Verified Retail Buyer</p></div>
+                    </div>
+                </div>
+                <div class="testimonial-card-jenny p-8">
+                    <div class="flex text-yellow-500 text-sm mb-3">★★★★★</div>
+                    <p class="text-[#5a4a40] italic leading-relaxed">"We stock Jennie Langaas in our spa — our clients love the results and reorder every month."</p>
+                    <div class="mt-4 flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-full bg-[#e8ddd2] flex items-center justify-center font-bold text-[#8b6b5a] text-lg flex-shrink-0">AL</div>
+                        <div><p class="font-semibold text-jenny-deep">Amanda L.</p><p class="text-[#a09084] text-xs">Wholesale Partner · Spa Owner</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CTA SECTION ===== -->
+    <section class="py-20 px-4 bg-gradient-to-r from-[#c98b7a] via-[#b06e5c] to-[#c98b7a] relative overflow-hidden">
+        <div class="hero-blob-jenny w-[500px] h-[500px] bg-white/10 top-[-200px] right-[-100px]"></div>
+        <div class="hero-blob-jenny w-[300px] h-[300px] bg-white/10 bottom-[-100px] left-[-100px]"></div>
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <span class="text-white/80 text-sm font-semibold tracking-[0.2em] uppercase">Join the Glow Community</span>
+            <h2 class="section-title-jenny text-5xl font-bold text-white mt-2">Ready to Glow?</h2>
+            <p class="text-white/80 text-lg mt-4 max-w-2xl mx-auto">Shop retail or become a wholesale partner — either way, your best skin starts here.</p>
+            <div class="mt-8 flex flex-wrap justify-center gap-4">
+                <button onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})" class="px-10 py-4 rounded-full bg-white text-[#b06e5c] font-bold text-lg shadow-xl hover:shadow-2xl transition-all transform hover:scale-105 inline-flex items-center gap-3"><i class="fas fa-shopping-bag"></i> Shop Retail</button>
+                <a href="#wholesale" class="px-10 py-4 rounded-full bg-transparent border-2 border-white/70 text-white font-bold text-lg hover:bg-white/10 transition-all inline-flex items-center gap-3"><i class="fas fa-boxes-stacked"></i> Wholesale</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="bg-[#2a221f] text-[#a09084] pt-20 pb-6 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-12 lg:gap-16 pb-12 border-b border-[#3f3530]">
+                <div class="col-span-2 md:col-span-1">
+                    <div class="flex items-center gap-3 mb-5">
+                        <div class="w-12 h-12 rounded-2xl logo-jenny flex items-center justify-center text-white font-bold text-xl shadow-lg flex-shrink-0">JL</div>
+                        <span class="text-xl font-bold text-white tracking-tight">jennie langaas<span class="text-[#c98b7a]"> beauty</span></span>
+                    </div>
+                    <p class="text-sm leading-relaxed text-[#a09084] max-w-xs mb-6">Premium skincare for radiant, healthy skin. Wholesale and retail sales of beauty and skincare products. Clean, effective, and cruelty-free.</p>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-10 h-10 rounded-full bg-[#3f3530] hover:bg-[#c98b7a]/20 hover:text-[#c98b7a] flex items-center justify-center text-[#a09084] transition-all duration-300 hover:scale-110"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-[#3f3530] hover:bg-[#c98b7a]/20 hover:text-[#c98b7a] flex items-center justify-center text-[#a09084] transition-all duration-300 hover:scale-110"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-[#3f3530] hover:bg-[#c98b7a]/20 hover:text-[#c98b7a] flex items-center justify-center text-[#a09084] transition-all duration-300 hover:scale-110"><i class="fab fa-tiktok"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-[#3f3530] hover:bg-[#c98b7a]/20 hover:text-[#c98b7a] flex items-center justify-center text-[#a09084] transition-all duration-300 hover:scale-110"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-[#3f3530] hover:bg-[#c98b7a]/20 hover:text-[#c98b7a] flex items-center justify-center text-[#a09084] transition-all duration-300 hover:scale-110"><i class="fab fa-pinterest-p"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-semibold text-sm uppercase tracking-wider mb-5">Shop</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#shop" class="footer-link-jenny">All Products</a></li>
+                        <li><a href="#bundles" class="footer-link-jenny">Bundles</a></li>
+                        <li><a href="#shop" class="footer-link-jenny">Best Sellers</a></li>
+                        <li><a href="#new" class="footer-link-jenny">New Arrivals</a></li>
+                        <li><a href="#wholesale" class="footer-link-jenny">Wholesale</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-semibold text-sm uppercase tracking-wider mb-5">Support</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="footer-link-jenny">Help Center</a></li>
+                        <li><a href="#" class="footer-link-jenny">Returns &amp; Refunds</a></li>
+                        <li><a href="#" class="footer-link-jenny">Shipping Info</a></li>
+                        <li><a href="#" class="footer-link-jenny">Track Order</a></li>
+                        <li><a href="mailto:jennielangaasbeautyllc@gmail.com" class="footer-link-jenny">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-span-2 md:col-span-1">
+                    <h4 class="text-white font-semibold text-sm uppercase tracking-wider mb-5">Contact</h4>
+                    <div class="space-y-3 text-sm">
+                        <p class="flex items-start gap-3"><i class="fas fa-map-pin mt-1 text-[#c98b7a]"></i> 11360 Burris Ln, Potter Valley, California 95469</p>
+                        <p class="flex items-center gap-3"><i class="fas fa-phone-alt text-[#c98b7a]"></i> <a href="tel:+17075109811" class="hover:text-white transition">+1 (707) 510-9811</a></p>
+                        <p class="flex items-center gap-3"><i class="fas fa-envelope text-[#c98b7a]"></i> <a href="mailto:jennielangaasbeautyllc@gmail.com" class="hover:text-white transition break-all">jennielangaasbeautyllc@gmail.com</a></p>
+                    </div>
+                    <h4 class="text-white font-semibold text-sm uppercase tracking-wider mb-4 mt-6">Stay Glowing ✨</h4>
+                    <form class="flex flex-col gap-3">
+                        <input type="email" placeholder="Enter your email" class="px-4 py-3 rounded-xl bg-[#3f3530] border border-[#4f4440] text-white placeholder-[#a09084] focus:outline-none focus:ring-2 focus:ring-[#c98b7a]/50 focus:border-transparent transition-all duration-300" />
+                        <button type="submit" class="px-4 py-3 rounded-xl bg-gradient-to-r from-[#c98b7a] to-[#b06e5c] text-white font-semibold text-sm hover:shadow-lg hover:shadow-[#b06e5c]/25 hover:scale-[1.02] transition-all duration-300">Subscribe</button>
+                    </form>
+                    <p class="text-xs text-[#a09084] mt-3">No spam. Unsubscribe anytime.</p>
+                </div>
+            </div>
+
+            <div class="pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex flex-wrap items-center justify-center md:justify-start gap-4 md:gap-6 text-xs">
+                    <a href="#" class="text-[#a09084] hover:text-white transition-colors duration-200">Privacy Policy</a>
+                    <span class="text-[#4f4440] hidden md:inline">|</span>
+                    <a href="#" class="text-[#a09084] hover:text-white transition-colors duration-200">Terms of Service</a>
+                    <span class="text-[#4f4440] hidden md:inline">|</span>
+                    <a href="#" class="text-[#a09084] hover:text-white transition-colors duration-200">Cookie Policy</a>
+                </div>
+                <p class="text-xs text-[#a09084] text-center">
+                    © 2026 <span class="text-white/80 font-medium">Jennie Langaas Beauty and Skincare Products LLC</span>. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== TOAST ===== -->
+    <div id="toast" class="toast-jenny hidden max-w-sm">
+        <div class="flex items-center gap-3">
+            <span class="text-2xl">✅</span>
+            <p id="toastMessage" class="font-semibold text-sm" style="color: var(--jenny-deep);"></p>
+        </div>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        function updateCartCount() {
+            const cart = JSON.parse(sessionStorage.getItem('cart') || '[]');
+            document.getElementById('cartCount').textContent = cart.length;
+        }
+        updateCartCount();
+
+        function addToCart(itemId) {
+            fetch('/add-to-cart/' + itemId, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(r => r.json())
+            .then(data => {
+                showToast(data.success ? 'Added to bag! 🌸' : data.message);
+                if (data.success) {
+                    const cart = JSON.parse(sessionStorage.getItem('cart') || '[]');
+                    cart.push(itemId);
+                    sessionStorage.setItem('cart', JSON.stringify(cart));
+                    updateCartCount();
+                }
+            })
+            .catch(() => showToast('Something went wrong'));
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = message;
+            toast.classList.remove('hidden');
+            clearTimeout(window.toastTimeout);
+            window.toastTimeout = setTimeout(() => toast.classList.add('hidden'), 3000);
+        }
+
+        window.addEventListener('scroll', () => {
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        document.querySelectorAll('.category-pill-jenny').forEach(pill => {
+            pill.addEventListener('click', function() {
+                document.querySelectorAll('.category-pill-jenny').forEach(p => p.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    </script>
+</body>
+</html>
