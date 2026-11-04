@@ -151,7 +151,6 @@ def get_cart():
     """Get cart and convert from old list format to dict if needed"""
     cart = session.get('cart', {})
 
-    # If cart is a list (old format), convert to dict
     if isinstance(cart, list):
         new_cart = {}
         for item_id in cart:
@@ -160,7 +159,6 @@ def get_cart():
         session.modified = True
         return new_cart
 
-    # If cart is None or not a dict, return empty dict
     if not isinstance(cart, dict):
         session['cart'] = {}
         session.modified = True
@@ -253,7 +251,7 @@ def index():
         )
     except Exception as e:
         traceback.print_exc()
-        return f"Error loading page: {e}", 500
+        return f"<h1>Error loading shop</h1><pre>{traceback.format_exc()}</pre>", 500
 
 
 # ============================================
@@ -267,7 +265,7 @@ def cart():
         return render_template('cart.html', **summary)
     except Exception as e:
         traceback.print_exc()
-        return f"Error loading cart: {e}", 500
+        return f"<h1>Error loading cart</h1><pre>{traceback.format_exc()}</pre>", 500
 
 
 @app.route('/add-to-cart/<item_id>', methods=['POST'])
@@ -357,7 +355,6 @@ def update_cart(item_id, action):
         session['cart'] = cart
         session.modified = True
 
-        # Calculate updated totals
         subtotal = 0
         for iid, qty in cart.items():
             if iid in PRODUCTS:
@@ -388,6 +385,10 @@ def update_cart(item_id, action):
         return jsonify({'success': False, 'message': str(e)}), 500
 
 
+# ============================================
+# CHECKOUT — with built-in diagnostics
+# ============================================
+
 @app.route('/checkout')
 def checkout():
     try:
@@ -396,10 +397,51 @@ def checkout():
             return redirect(url_for('index'))
 
         summary = build_cart_summary()
-        return render_template('checkout.html', **summary)
-    except Exception as e:
+
+        # Try rendering the template; if it fails, show the exact error
+        try:
+            return render_template('checkout.html', **summary)
+        except Exception as template_error:
+            error_html = f"""
+            <!DOCTYPE html>
+            <html>
+            <head><title>Checkout Template Error</title>
+            <script src="https://cdn.tailwindcss.com"></script></head>
+            <body class="p-8 bg-gray-50">
+                <h1 class="text-3xl font-bold text-red-600 mb-4">❌ Checkout Template Error</h1>
+                <div class="bg-white p-6 rounded-xl shadow mb-6">
+                    <p class="font-semibold mb-2">Error message:</p>
+                    <pre class="bg-red-50 p-4 rounded text-red-800 overflow-auto">{template_error}</pre>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow mb-6">
+                    <p class="font-semibold mb-2">Full traceback:</p>
+                    <pre class="bg-gray-100 p-4 rounded text-xs overflow-auto">{traceback.format_exc()}</pre>
+                </div>
+                <div class="bg-green-50 p-6 rounded-xl">
+                    <p class="font-semibold mb-2 text-green-800">✅ Cart data is OK:</p>
+                    <p>Items: {len(summary['cart_items'])}</p>
+                    <p>Subtotal: ${summary['subtotal']}</p>
+                    <p>Shipping: ${summary['shipping']}</p>
+                    <p>Total: ${summary['total']}</p>
+                </div>
+                <p class="mt-6"><a href="/cart" class="text-blue-600 underline">← Back to Cart</a></p>
+            </body>
+            </html>
+            """
+            return error_html, 500
+
+    except Exception as route_error:
         traceback.print_exc()
-        return f"Error loading checkout: {e}", 500
+        return f"""
+        <!DOCTYPE html>
+        <html><head><title>Checkout Route Error</title>
+        <script src="https://cdn.tailwindcss.com"></script></head>
+        <body class="p-8 bg-gray-50">
+            <h1 class="text-3xl font-bold text-red-600 mb-4">❌ Checkout Route Error</h1>
+            <pre class="bg-red-50 p-4 rounded text-red-800 overflow-auto">{traceback.format_exc()}</pre>
+            <p class="mt-4"><a href="/cart" class="text-blue-600 underline">← Back to Cart</a></p>
+        </body></html>
+        """, 500
 
 
 @app.route('/place-order', methods=['POST'])
@@ -421,7 +463,6 @@ def place_order():
 
         order_id = f"CF-{uuid.uuid4().hex[:8].upper()}"
 
-        # Clear cart
         session['cart'] = {}
         session.modified = True
 
@@ -443,7 +484,6 @@ def order_confirmation(order_id):
 
 @app.route('/clear-cart', methods=['POST'])
 def clear_cart():
-    """Utility route to clear the cart"""
     session['cart'] = {}
     session.modified = True
     return jsonify({'success': True, 'message': 'Cart cleared'})
