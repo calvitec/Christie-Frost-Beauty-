@@ -6,15 +6,13 @@
     <title>Your Bag — Christie Frost Beauty</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
     <style>
         * { font-family: 'Inter', sans-serif; }
         .serif { font-family: 'Fraunces', serif; }
         :root {
             --cf-sage: #7a9c8e;
             --cf-sage-deep: #5f7f72;
-            --cf-lavender: #b8a9c9;
-            --cf-lavender-soft: #e8e2f0;
             --cf-ivory: #faf8f5;
             --cf-mist: #f0eef6;
             --cf-deep: #2d2926;
@@ -81,17 +79,16 @@
 </head>
 <body>
 
-    <!-- HEADER -->
     <header class="sticky top-0 z-50 bg-[rgba(250,248,245,0.94)] backdrop-blur-md border-b border-[#e8e2dc]">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
-            <a href="{{ url_for('index') }}" class="flex items-center gap-3 group">
+            <a href="/" class="flex items-center gap-3 group">
                 <div class="w-11 h-11 rounded-2xl logo-mark flex items-center justify-center text-white font-bold text-lg shadow-md transition-all duration-300 group-hover:scale-105">CF</div>
                 <div class="hidden sm:block">
-                    <div class="text-lg font-bold tracking-tight" style="color: var(--cf-deep);">christie frost<span style="color: var(--cf-sage);"> beauty</span></div>
+                    <div class="text-lg font-bold tracking-tight" style="color: var(--cf-deep);">Christie Frost<span style="color: var(--cf-sage);"> Beauty</span></div>
                     <div class="text-[10px] uppercase tracking-[0.2em] font-medium" style="color: var(--cf-muted);">Skincare · Est. 2026</div>
                 </div>
             </a>
-            <a href="{{ url_for('index') }}" class="flex items-center gap-2 text-sm font-medium transition-colors" style="color: var(--cf-soft);" onmouseover="this.style.color='#7a9c8e'" onmouseout="this.style.color='#5c5551'">
+            <a href="/" class="flex items-center gap-2 text-sm font-medium transition-colors" style="color: var(--cf-soft);" onmouseover="this.style.color='#7a9c8e'" onmouseout="this.style.color='#5c5551'">
                 <i class="fas fa-arrow-left text-xs"></i>
                 <span class="hidden sm:inline">Continue Shopping</span>
                 <span class="sm:hidden">Back</span>
@@ -99,7 +96,6 @@
         </div>
     </header>
 
-    <!-- MAIN -->
     <main class="max-w-6xl mx-auto px-4 sm:px-6 py-10 md:py-14">
 
         <div class="mb-10">
@@ -113,7 +109,6 @@
         {% if cart_items %}
         <div class="grid lg:grid-cols-3 gap-8 lg:gap-10">
 
-            <!-- CART ITEMS -->
             <div class="lg:col-span-2 space-y-4">
                 {% for item in cart_items %}
                 <div class="cart-card p-5 md:p-6" id="item-{{ item.id }}">
@@ -156,13 +151,12 @@
                 {% endfor %}
 
                 <div class="flex flex-wrap items-center justify-center gap-6 pt-4 text-xs" style="color: var(--cf-muted);">
-                    <div class="flex items-center gap-2"><i class="fas fa-truck text-[#7a9c8e]"></i> Free shipping over $40</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-truck text-[#7a9c8e]"></i> Free shipping over $35</div>
                     <div class="flex items-center gap-2"><i class="fas fa-undo text-[#7a9c8e]"></i> 30-day returns</div>
                     <div class="flex items-center gap-2"><i class="fas fa-lock text-[#7a9c8e]"></i> Secure checkout</div>
                 </div>
             </div>
 
-            <!-- ORDER SUMMARY -->
             <div class="lg:col-span-1">
                 <div class="summary-card p-6 md:p-7 sticky top-24">
                     <h2 class="serif text-2xl mb-1" style="color: var(--cf-deep);">Order Summary</h2>
@@ -191,7 +185,7 @@
                         </div>
                     </div>
 
-                    <a href="{{ url_for('checkout') }}" class="btn-cf w-full py-4 rounded-2xl text-center block mt-6 text-sm md:text-base">
+                    <a href="/checkout" class="btn-cf w-full py-4 rounded-2xl text-center block mt-6 text-sm md:text-base">
                         <i class="fas fa-lock mr-2 text-xs"></i> Proceed to Checkout
                     </a>
 
@@ -204,30 +198,28 @@
                     </div>
 
                     <p class="text-[11px] text-center mt-4 leading-relaxed" style="color: var(--cf-muted);">
-                        🌿 Clean, cruelty-free skincare.<br>Thank you for choosing Christie Frost.
+                        🌿 Clean, cruelty-free skincare.<br>Thank you for choosing Christie Frost Beauty.
                     </p>
                 </div>
             </div>
         </div>
 
         {% else %}
-        <!-- EMPTY STATE -->
         <div class="text-center py-20 md:py-28">
             <div class="w-24 h-24 mx-auto rounded-full flex items-center justify-center mb-6" style="background: var(--cf-mist);">
                 <i class="fas fa-shopping-bag text-4xl" style="color: #c8bdb4;"></i>
             </div>
             <h2 class="serif text-3xl mb-2" style="color: var(--cf-deep);">Your bag is empty</h2>
             <p class="text-sm mb-8 max-w-sm mx-auto" style="color: var(--cf-muted);">Looks like you haven't added anything yet. Explore our clean skincare collection and find your new favorites.</p>
-            <a href="{{ url_for('index') }}" class="btn-cf inline-block px-10 py-4 rounded-2xl text-sm font-semibold">
+            <a href="/" class="btn-cf inline-block px-10 py-4 rounded-2xl text-sm font-semibold">
                 <i class="fas fa-shopping-bag mr-2"></i> Start Shopping
             </a>
         </div>
         {% endif %}
 
-        <!-- CONTACT STRIP -->
         <div class="mt-16 pt-8 border-t text-center" style="border-color: var(--cf-border);">
             <p class="text-xs" style="color: var(--cf-muted);">
-                Questions? Contact us at
+                Questions? Contact Christie Frost Beauty at
                 <a href="mailto:christiefrostbeautyandskincare@gmail.com" class="font-medium hover:underline" style="color: var(--cf-sage);">christiefrostbeautyandskincare@gmail.com</a>
                 or call <a href="tel:+12052588482" class="font-medium hover:underline" style="color: var(--cf-sage);">+1 (205) 258-8482</a>
             </p>
