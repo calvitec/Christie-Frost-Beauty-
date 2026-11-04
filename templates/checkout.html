@@ -107,7 +107,6 @@
 
     <div class="max-w-6xl mx-auto">
 
-        <!-- HEADER -->
         <div class="flex items-center justify-between mb-8 gap-4">
             <a href="/cart" class="flex items-center gap-2 text-sm font-medium" style="color: var(--cf-soft);">
                 <i class="fas fa-arrow-left text-xs"></i>
@@ -121,7 +120,6 @@
             <span class="text-sm font-semibold" style="color: var(--cf-sage);">${{ "%.2f"|format(total) }}</span>
         </div>
 
-        <!-- STEP INDICATORS -->
         <div class="step-indicator-cf">
             <div class="step-dot-cf active" id="step1Dot"></div>
             <div class="step-dot-cf" id="step2Dot"></div>
@@ -130,11 +128,9 @@
 
         <div class="grid lg:grid-cols-3 gap-8">
 
-            <!-- CHECKOUT FORM -->
             <div class="lg:col-span-2">
                 <div class="glass-card-cf p-6 md:p-8 shadow-xl">
 
-                    <!-- STEP 1: SHIPPING -->
                     <div class="checkout-step-cf active" id="step1">
                         <div class="flex items-center gap-3 mb-5">
                             <div class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white flex-shrink-0" style="background: var(--cf-sage);">1</div>
@@ -183,7 +179,6 @@
                         </button>
                     </div>
 
-                    <!-- STEP 2: PAYMENT -->
                     <div class="checkout-step-cf" id="step2">
                         <div class="flex items-center gap-3 mb-5">
                             <div class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white flex-shrink-0" style="background: var(--cf-sage);">2</div>
@@ -223,7 +218,6 @@
                         </div>
                     </div>
 
-                    <!-- STEP 3: CONFIRMATION -->
                     <div class="checkout-step-cf text-center" id="step3">
                         <div class="py-10 md:py-14">
                             <div class="w-24 h-24 mx-auto rounded-full flex items-center justify-center mb-5" style="background: #eef4ef;">
@@ -248,7 +242,6 @@
                 </div>
             </div>
 
-            <!-- ORDER SUMMARY -->
             <div class="lg:col-span-1">
                 <div class="glass-card-cf p-6 md:p-7 h-fit sticky top-24">
                     <h3 class="serif text-xl mb-1" style="color: var(--cf-deep);">Order Summary</h3>
@@ -305,7 +298,6 @@
             </div>
         </div>
 
-        <!-- CONTACT STRIP -->
         <div class="mt-12 pt-6 text-center" style="border-top: 1px solid var(--cf-border);">
             <p class="text-xs" style="color: var(--cf-muted);">
                 Need help? <a href="mailto:christiefrostbeautyandskincare@gmail.com" class="font-medium hover:underline" style="color: var(--cf-sage);">christiefrostbeautyandskincare@gmail.com</a>
@@ -315,10 +307,8 @@
         </div>
     </div>
 
-    <!-- Confetti Container -->
     <div class="confetti-container" id="confettiContainer"></div>
 
-    <!-- Toast -->
     <div id="toast" class="toast-cf hidden max-w-sm">
         <div class="flex items-center gap-3">
             <span class="text-2xl">✅</span>
