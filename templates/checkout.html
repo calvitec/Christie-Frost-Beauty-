@@ -1,19 +1,398 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Checkout — Christie Frost</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout — Christie Frost Beauty</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .serif { font-family: 'Fraunces', serif; }
+        :root {
+            --cf-sage: #7a9c8e;
+            --cf-sage-deep: #5f7f72;
+            --cf-ivory: #faf8f5;
+            --cf-mist: #f0eef6;
+            --cf-deep: #2d2926;
+            --cf-soft: #5c5551;
+            --cf-muted: #9e9590;
+            --cf-border: #e8e2dc;
+        }
+        body { background-color: var(--cf-ivory); }
+        .gradient-bg-cf {
+            background: linear-gradient(145deg, #f5f2f8 0%, #eef2ef 40%, #f4eff2 70%, #faf8f5 100%);
+        }
+        .glass-card-cf {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(232, 226, 220, 0.8);
+            border-radius: 28px;
+            box-shadow: 0 12px 40px rgba(80, 70, 60, 0.06);
+        }
+        .btn-cf {
+            background: linear-gradient(135deg, #7a9c8e 0%, #5f7f72 100%);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: none; cursor: pointer; color: white; font-weight: 600;
+        }
+        .btn-cf:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 36px rgba(122, 156, 142, 0.30);
+        }
+        .btn-cf:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+        .btn-outline-cf {
+            border: 2px solid #c8bdb4; color: var(--cf-soft);
+            transition: all 0.3s ease; background: transparent;
+        }
+        .btn-outline-cf:hover {
+            border-color: var(--cf-sage); color: var(--cf-sage);
+            background: rgba(122, 156, 142, 0.04);
+        }
+        .form-input-cf {
+            background: #faf8f5; border: 1px solid var(--cf-border);
+            border-radius: 14px; padding: 13px 16px; width: 100%;
+            color: var(--cf-deep); transition: all 0.3s; font-size: 0.9rem;
+        }
+        .form-input-cf:focus {
+            outline: none; border-color: var(--cf-sage);
+            box-shadow: 0 0 0 3px rgba(122, 156, 142, 0.1); background: #fff;
+        }
+        .step-indicator-cf {
+            display: flex; justify-content: center; align-items: center;
+            gap: 8px; margin-bottom: 32px;
+        }
+        .step-dot-cf {
+            width: 44px; height: 5px; border-radius: 3px;
+            background: #e0d8d0; transition: all 0.4s ease;
+        }
+        .step-dot-cf.active { background: var(--cf-sage); width: 64px; }
+        .step-dot-cf.completed { background: #8aaa96; }
+        .checkout-step-cf { display: none; animation: fadeInCF 0.5s ease; }
+        .checkout-step-cf.active { display: block; }
+        @keyframes fadeInCF {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .confetti-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 9998; overflow: hidden;
+        }
+        .confetti-piece {
+            position: absolute; width: 10px; height: 10px; border-radius: 2px;
+            animation: confettiFall linear forwards;
+        }
+        @keyframes confettiFall {
+            0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+        .toast-cf {
+            position: fixed; bottom: 30px; right: 30px; z-index: 9999;
+            background: #fff; box-shadow: 0 20px 60px rgba(80, 70, 60, 0.12);
+            border-radius: 24px; padding: 18px 26px;
+            animation: slideInCF 0.5s ease; border: 1px solid var(--cf-border);
+        }
+        @keyframes slideInCF {
+            0% { transform: translateX(100px); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        .hidden { display: none; }
+        .logo-mark { background: linear-gradient(135deg, #7a9c8e, #5f7f72); }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f0eef6; }
+        ::-webkit-scrollbar-thumb { background: #c8bdb4; border-radius: 4px; }
+    </style>
 </head>
-<body class="bg-gray-50 p-8">
-    <h1 class="text-3xl font-bold text-green-700">✅ Checkout page works!</h1>
-    <p class="mt-4">Total: ${{ total }}</p>
-    <p>Items: {{ total_items }}</p>
+<body class="gradient-bg-cf min-h-screen py-6 md:py-10 px-4">
 
-    <h2 class="text-xl font-bold mt-6">Cart Items:</h2>
-    {% for item in cart_items %}
-    <p>{{ item.name }} — Qty: {{ item.quantity }} — ${{ item.price }}</p>
-    {% endfor %}
+    <div class="max-w-6xl mx-auto">
 
-    <a href="/cart" class="text-blue-600 underline mt-6 block">Back to cart</a>
+        <!-- HEADER -->
+        <div class="flex items-center justify-between mb-8 gap-4">
+            <a href="/cart" class="flex items-center gap-2 text-sm font-medium" style="color: var(--cf-soft);">
+                <i class="fas fa-arrow-left text-xs"></i>
+                <span class="hidden sm:inline">Back to Bag</span>
+                <span class="sm:hidden">Back</span>
+            </a>
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl logo-mark flex items-center justify-center text-white font-bold text-base shadow-md flex-shrink-0">CF</div>
+                <h1 class="serif text-xl md:text-2xl font-semibold" style="color: var(--cf-deep);">Checkout</h1>
+            </div>
+            <span class="text-sm font-semibold" style="color: var(--cf-sage);">${{ "%.2f"|format(total) }}</span>
+        </div>
+
+        <!-- STEP INDICATORS -->
+        <div class="step-indicator-cf">
+            <div class="step-dot-cf active" id="step1Dot"></div>
+            <div class="step-dot-cf" id="step2Dot"></div>
+            <div class="step-dot-cf" id="step3Dot"></div>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-8">
+
+            <!-- CHECKOUT FORM -->
+            <div class="lg:col-span-2">
+                <div class="glass-card-cf p-6 md:p-8 shadow-xl">
+
+                    <!-- STEP 1: SHIPPING -->
+                    <div class="checkout-step-cf active" id="step1">
+                        <div class="flex items-center gap-3 mb-5">
+                            <div class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white flex-shrink-0" style="background: var(--cf-sage);">1</div>
+                            <h2 class="serif text-xl md:text-2xl" style="color: var(--cf-deep);">Shipping Information</h2>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="text-xs font-medium block mb-1.5" style="color: var(--cf-soft);">First Name</label>
+                                    <input type="text" class="form-input-cf" placeholder="Jane" id="firstName" value="Jane">
+                                </div>
+                                <div>
+                                    <label class="text-xs font-medium block mb-1.5" style="color: var(--cf-soft);">Last Name</label>
+                                    <input type="text" class="form-input-cf" placeholder="Doe" id="lastName" value="Doe">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="text-xs font-medium block mb-1.5" style="color: var(--cf-soft);">Email Address</label>
+                                <input type="email" class="form-input-cf" placeholder="jane@example.com" id="email" value="jane@example.com">
+                            </div>
+                            <div>
+                                <label class="text-xs font-medium block mb-1.5" style="color: var(--cf-soft);">Phone Number</label>
+                                <input type="tel" class="form-input-cf" placeholder="+1 (555) 000-0000" id="phone" value="+1 (555) 000-0000">
+                            </div>
+                            <div>
+                                <label class="text-xs font-medium block mb-1.5" style="color: var(--cf-soft);">Shipping Address</label>
+                                <input type="text" class="form-input-cf" placeholder="123 Main Street" id="address" value="123 Main Street">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="text-xs font-medium block mb-1.5" style="color: var(--cf-soft);">City</label>
+                                    <input type="text" class="form-input-cf" placeholder="Verbena" id="city" value="Verbena">
+                                </div>
+                                <div>
+                                    <label class="text-xs font-medium block mb-1.5" style="color: var(--cf-soft);">Postal Code</label>
+                                    <input type="text" class="form-input-cf" placeholder="36091" id="zip" value="36091">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="text-xs font-medium block mb-1.5" style="color: var(--cf-soft);">Country</label>
+                                <input type="text" class="form-input-cf" placeholder="United States" id="country" value="United States">
+                            </div>
+                        </div>
+                        <button onclick="goToStep(2)" class="mt-7 w-full py-4 rounded-2xl btn-cf text-sm md:text-base">
+                            Continue to Payment <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- STEP 2: PAYMENT -->
+                    <div class="checkout-step-cf" id="step2">
+                        <div class="flex items-center gap-3 mb-5">
+                            <div class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white flex-shrink-0" style="background: var(--cf-sage);">2</div>
+                            <h2 class="serif text-xl md:text-2xl" style="color: var(--cf-deep);">Payment Details</h2>
+                        </div>
+                        <div class="flex items-center gap-2 rounded-xl px-4 py-3 mb-5 text-xs" style="background: #eef4ef; color: #5c7a62;">
+                            <i class="fas fa-lock"></i>
+                            <span>Secure checkout. No real payment will be processed.</span>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="text-xs font-medium block mb-1.5" style="color: var(--cf-soft);">Card Number</label>
+                                <input type="text" class="form-input-cf" placeholder="4242 4242 4242 4242" value="4242 4242 4242 4242" readonly>
+                            </div>
+                            <div class="grid grid-cols-3 gap-4">
+                                <div class="col-span-2">
+                                    <label class="text-xs font-medium block mb-1.5" style="color: var(--cf-soft);">Expiry Date</label>
+                                    <input type="text" class="form-input-cf" placeholder="MM/YY" value="12/25" readonly>
+                                </div>
+                                <div>
+                                    <label class="text-xs font-medium block mb-1.5" style="color: var(--cf-soft);">CVC</label>
+                                    <input type="text" class="form-input-cf" placeholder="123" value="123" readonly>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="text-xs font-medium block mb-1.5" style="color: var(--cf-soft);">Name on Card</label>
+                                <input type="text" class="form-input-cf" placeholder="Jane Doe" value="Jane Doe">
+                            </div>
+                        </div>
+                        <div class="flex gap-3 mt-7">
+                            <button onclick="goToStep(1)" class="flex-1 py-4 rounded-2xl btn-outline-cf font-semibold text-sm">
+                                <i class="fas fa-arrow-left mr-2 text-xs"></i> Back
+                            </button>
+                            <button onclick="placeOrder()" class="flex-1 py-4 rounded-2xl btn-cf text-sm" id="placeOrderBtn">
+                                <i class="fas fa-lock mr-2 text-xs"></i> Place Order
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: CONFIRMATION -->
+                    <div class="checkout-step-cf text-center" id="step3">
+                        <div class="py-10 md:py-14">
+                            <div class="w-24 h-24 mx-auto rounded-full flex items-center justify-center mb-5" style="background: #eef4ef;">
+                                <i class="fas fa-check text-5xl" style="color: #8aaa96;"></i>
+                            </div>
+                            <h2 class="serif text-3xl md:text-4xl" style="color: var(--cf-deep);">Order Placed! 🎉</h2>
+                            <p class="mt-3 text-sm" style="color: var(--cf-muted);">Your skincare products are on the way</p>
+                            <div class="mt-7 p-5 rounded-2xl inline-block min-w-[240px]" style="background: var(--cf-mist); border: 1px solid var(--cf-border);">
+                                <p class="text-[11px] uppercase tracking-wider font-semibold" style="color: var(--cf-muted);">Order ID</p>
+                                <p class="font-bold text-xl mt-1" style="color: var(--cf-deep);" id="orderId">CF-XXXXXXXX</p>
+                            </div>
+                            <div class="mt-8 flex flex-col gap-3 max-w-xs mx-auto">
+                                <a href="/" class="py-4 rounded-2xl btn-cf text-sm text-center">
+                                    <i class="fas fa-arrow-left mr-2 text-xs"></i> Continue Shopping
+                                </a>
+                            </div>
+                            <p class="text-xs mt-6" style="color: var(--cf-muted);">
+                                A confirmation email has been sent.<br>Questions? <a href="mailto:christiefrostbeautyandskincare@gmail.com" class="font-medium hover:underline" style="color: var(--cf-sage);">Contact us</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ORDER SUMMARY -->
+            <div class="lg:col-span-1">
+                <div class="glass-card-cf p-6 md:p-7 h-fit sticky top-24">
+                    <h3 class="serif text-xl mb-1" style="color: var(--cf-deep);">Order Summary</h3>
+                    <p class="text-[11px] mb-5" style="color: var(--cf-muted);">Taxes calculated at checkout</p>
+
+                    {% for item in cart_items %}
+                    <div class="flex items-center gap-3 py-3" style="border-bottom: 1px solid #f3ebe5;">
+                        <div class="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0" style="background: var(--cf-mist);">
+                            <img src="{{ item.image }}" alt="{{ item.name }}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm font-semibold truncate" style="color: var(--cf-deep);">{{ item.name }}</p>
+                            <p class="text-xs mt-0.5" style="color: var(--cf-muted);">Qty {{ item.quantity }}</p>
+                        </div>
+                        <p class="text-sm font-bold flex-shrink-0" style="color: var(--cf-sage);">${{ "%.2f"|format(item.price) }}</p>
+                    </div>
+                    {% endfor %}
+
+                    <div class="mt-4 pt-4 space-y-2.5 text-sm" style="border-top: 1px solid var(--cf-border);">
+                        <div class="flex justify-between">
+                            <span style="color: var(--cf-soft);">Subtotal</span>
+                            <span class="font-semibold" style="color: var(--cf-deep);">${{ "%.2f"|format(subtotal) }}</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span style="color: var(--cf-soft);">Shipping</span>
+                            <span class="font-semibold" style="color: var(--cf-deep);">
+                                {% if shipping == 0 %}
+                                <span class="text-[#5c7a62] text-xs font-semibold px-2 py-0.5 rounded-full" style="background:#eef4ef;">FREE</span>
+                                {% else %}
+                                ${{ "%.2f"|format(shipping) }}
+                                {% endif %}
+                            </span>
+                        </div>
+                        <div class="pt-4 flex justify-between items-baseline" style="border-top: 1px solid var(--cf-border);">
+                            <span class="font-semibold" style="color: var(--cf-deep);">Total</span>
+                            <span class="text-2xl font-bold" style="color: var(--cf-sage);">${{ "%.2f"|format(total) }}</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-5 space-y-2 text-xs" style="color: var(--cf-muted);">
+                        <p><i class="fas fa-lock mr-2" style="color: #c8bdb4;"></i> Secure checkout</p>
+                        <p><i class="fas fa-undo mr-2" style="color: #c8bdb4;"></i> Free returns within 30 days</p>
+                        <p><i class="fas fa-leaf mr-2" style="color: #c8bdb4;"></i> Cruelty-free &amp; clean ingredients</p>
+                    </div>
+
+                    <div class="mt-5 flex items-center justify-center gap-3 text-xl" style="color: #c8bdb4;">
+                        <i class="fab fa-cc-visa"></i>
+                        <i class="fab fa-cc-mastercard"></i>
+                        <i class="fab fa-cc-amex"></i>
+                        <i class="fab fa-cc-paypal"></i>
+                        <i class="fab fa-cc-apple-pay"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTACT STRIP -->
+        <div class="mt-12 pt-6 text-center" style="border-top: 1px solid var(--cf-border);">
+            <p class="text-xs" style="color: var(--cf-muted);">
+                Need help? <a href="mailto:christiefrostbeautyandskincare@gmail.com" class="font-medium hover:underline" style="color: var(--cf-sage);">christiefrostbeautyandskincare@gmail.com</a>
+                · <a href="tel:+12052588482" class="font-medium hover:underline" style="color: var(--cf-sage);">+1 (205) 258-8482</a>
+            </p>
+            <p class="text-[11px] mt-1" style="color: #c8bdb4;">8656 County Road 49, Verbena, AL 36091</p>
+        </div>
+    </div>
+
+    <!-- Confetti Container -->
+    <div class="confetti-container" id="confettiContainer"></div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast-cf hidden max-w-sm">
+        <div class="flex items-center gap-3">
+            <span class="text-2xl">✅</span>
+            <p id="toastMessage" class="font-semibold text-sm" style="color: var(--cf-deep);"></p>
+        </div>
+    </div>
+
+    <script>
+        function goToStep(step) {
+            document.querySelectorAll('.checkout-step-cf').forEach(el => el.classList.remove('active'));
+            document.getElementById('step' + step).classList.add('active');
+
+            for (let i = 1; i <= 3; i++) {
+                const dot = document.getElementById('step' + i + 'Dot');
+                dot.classList.remove('active', 'completed');
+                if (i < step) dot.classList.add('completed');
+                if (i === step) dot.classList.add('active');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function placeOrder() {
+            const btn = document.getElementById('placeOrderBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2 text-xs"></i> Processing...';
+
+            fetch('/place-order', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('orderId').textContent = data.order_id;
+                    goToStep(3);
+                    launchConfetti();
+                    showToast('Order placed successfully! 🎉');
+                } else {
+                    showToast('❌ ' + data.message);
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-lock mr-2 text-xs"></i> Place Order';
+                }
+            })
+            .catch(() => {
+                showToast('❌ Something went wrong');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-lock mr-2 text-xs"></i> Place Order';
+            });
+        }
+
+        function launchConfetti() {
+            const container = document.getElementById('confettiContainer');
+            const colors = ['#7a9c8e', '#5f7f72', '#b8a9c9', '#c4a882', '#e8e2f0', '#d4b8b0'];
+            for (let i = 0; i < 100; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                piece.style.left = Math.random() * 100 + '%';
+                piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+                piece.style.width = (Math.random() * 8 + 4) + 'px';
+                piece.style.height = (Math.random() * 8 + 4) + 'px';
+                piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                piece.style.animationDelay = (Math.random() * 2) + 's';
+                container.appendChild(piece);
+                setTimeout(() => piece.remove(), 4500);
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = message;
+            toast.classList.remove('hidden');
+            clearTimeout(window.toastTimeout);
+            window.toastTimeout = setTimeout(() => toast.classList.add('hidden'), 4000);
+        }
+    </script>
 </body>
 </html>
