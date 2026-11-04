@@ -1,25 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Checkout Test — Christie Frost</title>
+    <title>Checkout — Christie Frost</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 p-8">
-    <h1 class="text-3xl font-bold text-green-700">✅ Checkout page loaded successfully!</h1>
+    <h1 class="text-3xl font-bold text-green-700">✅ Checkout page works!</h1>
     <p class="mt-4">Total: ${{ total }}</p>
     <p>Items: {{ total_items }}</p>
-    <p>Subtotal: ${{ subtotal }}</p>
-    <p>Shipping: ${{ shipping }}</p>
 
-    <hr class="my-6">
-    <h2 class="text-xl font-bold">Cart Items:</h2>
-    <ul class="mt-2">
-        {% for item in cart_items %}
-        <li>{{ item.name }} — Qty: {{ item.quantity }} — ${{ item.price }}</li>
-        {% endfor %}
-    </ul>
+    <h2 class="text-xl font-bold mt-6">Cart Items:</h2>
+    {% for item in cart_items %}
+    <p>{{ item.name }} — Qty: {{ item.quantity }} — ${{ item.price }}</p>
+    {% endfor %}
 
-    <hr class="my-6">
-    <a href="/cart" class="text-blue-600 underline">Back to cart</a>
+    <a href="/cart" class="text-blue-600 underline mt-6 block">Back to cart</a>
 </body>
 </html>
